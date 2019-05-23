@@ -1,0 +1,8 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>Discover songs based on artists and songs you love!</h1>
+  {% for song in songs %}
+  <div><p>{{ song.track }} by {{ song.artist }}</p></div>
+  {% endfor %}
+{% endblock %}
