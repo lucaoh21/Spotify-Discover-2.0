@@ -1,30 +1,23 @@
-<html>
+{% extends 'bootstrap/base.html' %}
 
-<head>
-  {% if title %}
-  <title>{{ title }} - Discover 2.0</title>
-  {% else %}
-  <title>Discover 2.0</title>
-  {% endif %}
-</head>
+{% block styles %}
+<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/main.css') }}">
+{% endblock %}
 
-<body>
-  <div>
-    Discover 2.0
-    <a href="/index">Home</a>
-    <a href="/login">Login</a>
+{% block title %}
+  {% if title %}{{ title }} - Microblog{% else %}Welcome to Microblog{% endif %}
+{% endblock %}
+
+{% block content %}
+  <div class="container">
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+      {% for message in messages %}
+      <div class="alert alert-info" role="alert">{{ message }}</div>
+      {% endfor %}
+    {% endif %}
+    {% endwith %}
+
+    {% block app_content %}{% endblock %}
   </div>
-  <hr>
-  {% with messages = get_flashed_messages() %}
-  {% if messages %}
-  <ul>
-    {% for message in messages %}
-    <li>{{ message }}</li>
-    {% endfor %}
-  </ul>
-  {% endif %}
-  {% endwith %}
-  {% block content %}{% endblock %}
-</body>
-
-</html>
+{% endblock %}
