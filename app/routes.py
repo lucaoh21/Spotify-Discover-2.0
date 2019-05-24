@@ -35,10 +35,8 @@ def tracks():
 		
 	return render_template('tracks.html', user=session['user'], track_ids=track_ids, rec_track_ids=rec_track_ids)
 
-
 @app.route('/callback')
 def callback():
-
 	
 	state = request.args.get('state')
 	code = request.args.get('code')
@@ -56,7 +54,6 @@ def callback():
 		session['token'] = token
 
 	return redirect('/tracks')
-	
 
 @app.route('/authorize', methods=['GET', 'POST'])
 def authorize():
