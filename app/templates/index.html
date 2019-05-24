@@ -2,7 +2,11 @@
 
 {% block app_content %}
   <h1>Discover songs based on artists and songs you love!</h1>
-  <button type="button" onclick="window.location.href='{{ url_for('tracks') }}'">What are my top songs?>
+  <form action="/authorize" method="get">
+    <button type="submit">
+      What are my top songs?
+    </button>
+  </form>
   {% for song in songs %}
   <div><p>{{ song.track }} by {{ song.artist }}</p></div>
   {% endfor %}

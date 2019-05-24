@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block app_content %}
-  <h1>Discover songs based on artists and songs you love!</h1>
+  <h1>Hello {{ user }}!</h1>
   {% for song in track_list %}
   <div><p>{{ song }}</p></div>
   {% endfor %}

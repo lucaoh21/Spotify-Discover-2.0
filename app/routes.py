@@ -1,6 +1,7 @@
-from flask import render_template, flash, redirect
+from flask import render_template, flash, redirect, request, session, make_response
 from app import app
 from app.forms import LoginForm
+from app.functions import createStateKey, getToken, getUserInformation
 import spotipy
 import spotipy.util as util
 
@@ -22,35 +23,54 @@ def index():
 
 @app.route('/tracks')
 def tracks():
-	clientID = 'your_password'
-	clientSecret = 'your_password'
-	redirectURI = 'https://localhost:8080/'
-	scope = 'user-library-read user-modify-playback-state user-read-currently-playing user-read-playback-state user-top-read'
-	username = 'lucaoh21'
 
-	token = util.prompt_for_user_token(username, scope, clientID, clientSecret, redirectURI)
+	sp = spotipy.Spotify(auth=session['token'])
 
-	if token:
-		sp = spotipy.Spotify(auth=token)
-
-		tracks = sp.current_user_top_tracks(limit=5, time_range='medium_term')
-		track_list = []
-		for track in tracks['items']:
-			track_list.append(track['name'])
-	return render_template('tracks.html', title='Top Tracks', track_list=track_list)
+	current_user = getUserInformation(sp)
+	session['user'] = current_user['display_name']
+	session['user_location'] = current_user['country']
+		
+	return render_template('tracks.html', user=session['user'])
 
 
-@app.route('/login', methods=['GET', 'POST'])
-def login():
-	form = LoginForm()
-	if form.validate_on_submit():
-		flash('Login requested for user {}, remember_me={}'.format(
-            form.username.data, form.remember_me.data))
-		return redirect(url_for('index'))
-	return render_template('login.html', title='Sign In', form=form)
+@app.route('/callback')
+def callback():
+
+	
+	state = request.args.get('state')
+	code = request.args.get('code')
+
+	if request.args.get('error'):
+		print("ran into error")
+		return request.args.get('error')
+	elif state == None or state != session['state_key']:
+		print("failed state")
+		return
+	else:
+		session.pop('state_key', None)
+
+		token = getToken(code)
+		session['token'] = token
+
+	return redirect('/tracks')
+	
+
+@app.route('/authorize', methods=['GET', 'POST'])
+def authorize():
+	client_id = app.config['CLIENT_ID']
+	client_secret = app.config['CLIENT_SECRET']
+	redirect_uri = app.config['REDIRECT_URI']
+	scope = app.config['SCOPE']
+
+	state_key = createStateKey(15)
+	session['state_key'] = state_key
+
+	authorize_url = 'https://accounts.spotify.com/en/authorize?'
+	parameters = 'response_type=code&client_id=' + client_id + '&redirect_uri=' + redirect_uri + '&scope=' + scope + '&state=' + state_key
+
+	response = make_response(redirect(authorize_url + parameters))
+	return response
 
 
-# @app.route('/authorize', methods=['GET', 'POST'])
-# def authorize():
 
 
