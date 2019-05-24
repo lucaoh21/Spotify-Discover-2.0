@@ -7,7 +7,12 @@
       What are my top songs?
     </button>
   </form>
-  {% for song in songs %}
-  <div><p>{{ song.track }} by {{ song.artist }}</p></div>
-  {% endfor %}
+  <div>
+    <p>Inspired by Spotify's Discover Weekly playlists, this website was designed
+      to give Spotify users more versatility with their music. This website allows
+      users to see their top tracks and artists, and can create playlists based
+      off a user's preferences (in the hope of creating a Discover Daily playlist).
+      
+    <iframe src="https://open.spotify.com/follow/1/?uri=spotify:user:lucaoh21&size=detail&theme=light" width="300" height="56" scrolling="no" frameborder="0" style="border:none; overflow:hidden;" allowtransparency="true"></iframe>
+  </div>
 {% endblock %}

@@ -2,7 +2,21 @@
 
 {% block app_content %}
   <h1>Hello {{ user }}!</h1>
-  {% for song in track_list %}
-  <div><p>{{ song }}</p></div>
-  {% endfor %}
+  <div>
+    <h3>Your top tracks:</h3>
+    {% for track in track_ids %}
+      <div>
+        <iframe src="https://open.spotify.com/embed/track/{{ track }}" width="500" height="100" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+      </div>
+    {% endfor %}
+  </div>
+
+  <div>
+    <h3>Recommended tracks:</h3>
+    {% for track in rec_track_ids %}
+      <div>
+        <iframe src="https://open.spotify.com/embed/track/{{ track }}" width="500" height="100" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+      </div>
+    {% endfor %}
+  </div>
 {% endblock %}

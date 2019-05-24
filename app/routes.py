@@ -1,7 +1,7 @@
 from flask import render_template, flash, redirect, request, session, make_response
 from app import app
 from app.forms import LoginForm
-from app.functions import createStateKey, getToken, getUserInformation
+from app.functions import createStateKey, getToken, getUserInformation, getTopTracks, getRecommendedTracks
 import spotipy
 import spotipy.util as util
 
@@ -29,8 +29,11 @@ def tracks():
 	current_user = getUserInformation(sp)
 	session['user'] = current_user['display_name']
 	session['user_location'] = current_user['country']
+
+	track_ids = getTopTracks(sp)
+	rec_track_ids = getRecommendedTracks(sp)
 		
-	return render_template('tracks.html', user=session['user'])
+	return render_template('tracks.html', user=session['user'], track_ids=track_ids, rec_track_ids=rec_track_ids)
 
 
 @app.route('/callback')

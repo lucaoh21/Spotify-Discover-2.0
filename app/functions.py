@@ -32,3 +32,32 @@ def getToken(code):
 
 def getUserInformation(sp):
 	return sp.current_user()
+
+def getTopTracks(sp):
+	tracks = sp.current_user_top_tracks(limit=5, time_range='medium_term')
+	track_ids = []
+	for track in tracks['items']:
+		track_ids.append(track['id'])
+
+	return track_ids
+
+def getRecommendedTracks(sp):
+	tracks = sp.current_user_top_tracks(limit=2, time_range='medium_term')
+	artists = sp.current_user_top_artists(limit=3, time_range='medium_term')
+	track_uri = []
+	artist_uri = []
+	
+	for track in tracks['items']:
+		track_uri.append(track['uri'])
+	for artist in artists['items']:
+		artist_uri.append(artist['uri'])
+
+	recommended = sp.recommendations(seed_artists=artist_uri, seed_tracks=track_uri, limit=10)
+	rec_track_ids = []
+	
+	for track in recommended['tracks']:
+		rec_track_ids.append(track['id'])
+
+	return rec_track_ids
+
+
