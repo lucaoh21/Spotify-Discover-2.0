@@ -1,4 +1,122 @@
 body {
-  background-color: #000000;
+  background-color: #000000 !important;
   color: #ffffff;
 }
+
+div {
+	display: block;
+}
+
+.iframe-track {
+	position: relative;
+    height: 80px;
+    width: 100%; 
+}
+
+.dash {
+	margin-top: 20px;
+	margin-bottom: 20px;
+	border: 1px solid transparent;
+    border-radius: 4px;
+    padding: 5px 10px 5px 10px;
+}
+
+.dash-heading {
+	background-color: #f5f5f5;
+}
+
+.dash-content {
+	background-color: #fff;
+}
+
+.header {
+  margin-top: 50px;
+}
+
+.navbar {
+  background-color: #282828;
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+
+.navbar a:hover {
+  background: #ddd;
+  color: black;
+}
+
+.playback {
+	text-align: center;
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+.playback-item {
+	display: inline-block;
+	margin-left: 5px;
+	margin-right: 5px;
+}
+
+.playback-button {
+	height: 25px;
+	width: 50px;
+}
+
+.popup {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.popup .popup-content {
+  visibility: hidden;
+  width: 160px;
+  background-color: #282828;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 8px 0;
+  position: absolute;
+  z-index: 1;
+  top: 140%;
+  left: 50%;
+  margin-left: -80px;
+  box-shadow: 0 0 20px #000;
+}
+
+/* to make the popup have an arrow */
+.popup .popup-content::after {
+  content: "";
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-bottom: 5px solid #555;
+}
+
+.popup .show {
+  visibility: visible;
+  -webkit-animation: fadeIn 1s;
+  animation: fadeIn 1s;
+}
+
+/* for object to fade in */
+@-webkit-keyframes fadeIn {
+  from {opacity: 0;} 
+  to {opacity: 1;}
+}
+
+@keyframes fadeIn {
+  from {opacity: 0;}
+  to {opacity:1 ;}
+}
+
+

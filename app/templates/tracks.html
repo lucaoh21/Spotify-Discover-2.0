@@ -1,14 +1,143 @@
 {% extends "base.html" %}
 
 {% block app_content %}
-  <h1>Hello {{ user }}!</h1>
-  <div>
-    <h3>Your top tracks:</h3>
-    {% for track in track_ids %}
-      <div>
-        <iframe src="https://open.spotify.com/embed/track/{{ track }}" width="500" height="100" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script type=text/javascript>
+    $(function() {
+      $('a#start').bind('click', function() {
+        $.getJSON('/playback/start',
+           function(data) {
+            //do nothing
+           });
+        return false;
+      });
+    });
+    $(function() {
+      $('a#pause').bind('click', function() {
+        $.getJSON('/playback/pause',
+           function(data) {
+            //do nothing
+           });
+        return false;
+      });
+    });
+    $(function() {
+      $('a#previous').bind('click', function() {
+        $.getJSON('/playback/previous',
+           function(data) {
+            //do nothing
+           });
+        return false;
+      });
+    });
+    $(function() {
+      $('a#skip').bind('click', function() {
+        $.getJSON('/playback/skip',
+           function(data) {
+            //do nothing
+           });
+        return false;
+      });
+    });
+    function showPopup() {
+      var popup = document.getElementById("devices");
+      popup.classList.toggle("show");
+    }
+  </script>
+
+  <div class="navbar">
+    <div class="playback">
+      <form class="playback-item">
+        <a href=# id=previous>
+          <button class="btn btn-default playback-button">
+            <i class="fa fa-step-backward"></i>
+          </button>
+        </a>
+      </form>
+      <form class="playback-item">
+        <a href=# id=start>
+          <button class="btn btn-default playback-button">
+            <i class="fa fa-play-circle"></i>
+          </button>
+        </a>
+      </form>
+      <form class="playback-item">
+        <a href=# id=pause>
+          <button class="btn btn-default playback-button">
+            <i class="fa fa-stop-circle"></i>
+          </button>
+        </a>
+      </form>
+      <form class="playback-item">
+        <a href=# id=skip>
+          <button class="btn btn-default playback-button">
+            <i class="fa fa-step-forward"></i>
+          </button>
+        </a>
+      </form>
+      <div class="popup playback-item" onclick="showPopup()">
+        <i class="fas fa-desktop"></i>
+        <span class="popup-content" id="devices">
+          {% for device in devices %}
+            {% if 'Computer' == device[2] %}
+              <i class="fas fa-desktop"></i>
+            {% elif 'Smartphone' == device[2] %}
+              <i class="fas fa-mobile-alt"></i>
+            {% elif 'Tablet' == device[2] %}
+              <i class="fas fa-tablet-alt"></i>
+            {% elif 'TV' == device[2] %}
+              <i class="fas fa-tv"></i>
+            {% else %}
+              <i class="fas fa-microphone-alt"></i>
+            {% endif %}
+            <p>{{ device[1] }}</p>
+          {% endfor %}
+          <!-- <a href=# id=skip>
+            <button class="btn btn-default playback-button">
+             <i class="fa fa-step-forward"></i>
+            </button>
+          </a> -->
+        </span>
       </div>
-    {% endfor %}
+    </div>
+  </div>
+
+  <h1 class="header">Hello {{ user }}!</h1>
+    <div class="col-md-4">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <ul class="nav nav-pills">
+            <li class="active"><a data-toggle="pill" href="#short">Short Term</a></li>
+            <li><a data-toggle="pill" href="#medium">Medium Term</a></li>
+            <li><a data-toggle="pill" href="#long">Long Term</a></li>
+          </ul>
+        </div>
+        <div class="panel-body tab-content">
+          <div id="short" class="tab-pane fade in active">
+            {% for track in track_ids[0] %}
+              <div>
+                <iframe class="iframe-track" src="https://open.spotify.com/embed/track/{{ track }}" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+              </div>
+            {% endfor %}
+          </div>
+          <div id="medium" class="tab-pane fade">
+            {% for track in track_ids[1] %}
+              <div>
+                <iframe class="iframe-track" src="https://open.spotify.com/embed/track/{{ track }}"frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+              </div>
+            {% endfor %}
+          </div>
+          <div id="long" class="tab-pane fade">
+            {% for track in track_ids[2] %}
+              <div>
+                <iframe class="iframe-track" src="https://open.spotify.com/embed/track/{{ track }}"frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
 
   <div>

@@ -24,26 +24,33 @@ def getToken(code):
 	post_response = requests.post(token_url, headers=headers, data=body)
 
 	try:
-
 		return post_response.json()['access_token']
 	except ValueError:
 		print('JSON decoding failed')
 		return 'value error'
 
+
 def getUserInformation(sp):
 	return sp.current_user()
 
+
 def getTopTracks(sp):
-	tracks = sp.current_user_top_tracks(limit=5, time_range='medium_term')
 	track_ids = []
-	for track in tracks['items']:
-		track_ids.append(track['id'])
+	time_range = ['short_term', 'medium_term', 'long_term']
+	for time in time_range:
+		track_range_ids = []
+		tracks = sp.current_user_top_tracks(limit=5, time_range=time)
+
+		for track in tracks['items']:
+			track_range_ids.append(track['id'])
+		track_ids.append(track_range_ids)
 
 	return track_ids
 
+
 def getRecommendedTracks(sp):
-	tracks = sp.current_user_top_tracks(limit=2, time_range='medium_term')
-	artists = sp.current_user_top_artists(limit=3, time_range='medium_term')
+	tracks = sp.current_user_top_tracks(limit=2, time_range='short_term')
+	artists = sp.current_user_top_artists(limit=3, time_range='short_term')
 	track_uri = []
 	artist_uri = []
 	
@@ -60,4 +67,60 @@ def getRecommendedTracks(sp):
 
 	return rec_track_ids
 
+
+def pausePlayback(sp):
+	playback = sp.current_playback()
+
+	if playback == None:
+		print("No pausing playback was found")
+		return
+	else:
+		if playback['is_playing']:
+			sp.pause_playback(playback['device']['id'])
+			print("Playback paused")
+		return
+
+
+def startPlayback(sp):
+	playback = sp.current_playback()
+
+	print("Playback: " + playback['item']['name'])
+
+	if playback == None:
+		print("No starting playback was found")
+		return
+	else:
+		if playback['is_playing']:
+			print(playback['device']['id'])
+			sp.start_playback(playback['device']['id'])
+			print("Playback started")
+		return
+
+
+def currentPlaybackDevice(sp):
+	playback = sp.current_playback()
+
+	if playback == None:
+		print("No starting playback was found")
+		return
+	else:
+		print(playback['device']['id'])
+		return playback['device']['id']
+
+
+def skipTrack(sp):
+	sp.next_track()
+	return
+
+
+def previousTrack(sp):
+	sp.previous_track()
+
+
+def getUserDevices(sp):
+	devices = sp.devices()
+	device_list = []
+	for device in devices['devices']:
+		device_list.append([device['id'], device['name'], device['type']])
+	return device_list
 
