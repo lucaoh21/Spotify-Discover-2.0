@@ -7,3 +7,4 @@ This project provides Spotify users more content and accessibility to music they
     1. To create a virtual env: `virtualenv venv`
     2. To activate virtual env: `. venv/bin/activate`
     3. Download the required packages: `pip install --user --requirement requirements.txt`
+2. To start the web application: `flask run`
