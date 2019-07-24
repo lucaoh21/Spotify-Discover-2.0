@@ -1,6 +1,6 @@
 body {
   background-color: #000000 !important;
-  color: #ffffff;
+  color: #000000;
 }
 
 div {
@@ -113,4 +113,80 @@ div {
   to {opacity:1 ;}
 }
 
+
+
+
+/*body {
+  background-color: #F5F5F5;
+}
+
+div {
+  display: block;
+}*/
+
+label:hover{
+  cursor: pointer;
+}
+
+.form-content{
+  margin: 0px auto;
+  padding-top: 0px;
+  font-size: 14px;
+  background-color: #FFF !important;
+  box-shadow: 0 3px 9px rgba(0, 0, 0, 0.1);
+}
+
+.form-list{
+  padding: 0px;
+  list-style: none;
+  margin: 0px;
+  position: relative;
+}
+
+.form-line-header{
+  padding: 15px 40px 15px 40px;
+  margin-top: 10px;
+  background-color: #3a3f44;
+
+}
+
+.form-line{
+  padding: 0px 0px 0px 0px;
+  margin-top: 0px;
+  margin-bottom: 0px;
+
+}
+
+.form-header{
+	text-align: center;
+}
+
+.form-box{
+  padding: 0px;
+  white-space: normal;
+}
+.form-scroll{
+  overflow-y: scroll;
+  width: 100%;
+  padding: 10px;
+  height: 350px;
+}
+
+.form-submit{
+  text-align: center;
+  width: 100%;
+  padding: 15px 40px 15px 40px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.form-button{
+  padding: 8px 17px;
+  cursor: pointer;
+  border-radius: 3px 3px;
+  background-color: #E8E8E8;
+  box-shadow: 0 3px 9px rgba(0, 0, 0, 0.1);
+  display: inline-block;
+  margin: 5px;
+}
 
