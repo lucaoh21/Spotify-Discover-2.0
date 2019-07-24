@@ -103,49 +103,68 @@
   </div>
 
   <h1 class="header">Hello {{ user }}!</h1>
-    <div class="col-md-4">
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <ul class="nav nav-pills">
-            <li class="active"><a data-toggle="pill" href="#short">Short Term</a></li>
-            <li><a data-toggle="pill" href="#medium">Medium Term</a></li>
-            <li><a data-toggle="pill" href="#long">Long Term</a></li>
-          </ul>
+  <div class="col-md-4">
+    <div class="panel panel-tabs panel-default">
+      <div class="panel-heading">
+        <ul  class="nav nav-tabs nav-justified">
+          <li class="active">
+            <a  href="#short" data-toggle="tab">Short Term</a>
+          </li>
+          <li>
+            <a href="#medium" data-toggle="tab">Medium Term</a>
+          </li>
+          <li>
+            <a href="#long" data-toggle="tab">Long Term</a>
+          </li>
+        </ul>
+      </div>
+      <div class="panel-body tab-content">
+        <div id="short" class="tab-pane fade in active">
+          {% for track in track_ids[0] %}
+            <div>
+              <iframe class="iframe-track" src="https://open.spotify.com/embed/track/{{ track }}" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+            </div>
+          {% endfor %}
         </div>
-        <div class="panel-body tab-content">
-          <div id="short" class="tab-pane fade in active">
-            {% for track in track_ids[0] %}
-              <div>
-                <iframe class="iframe-track" src="https://open.spotify.com/embed/track/{{ track }}" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
-              </div>
-            {% endfor %}
-          </div>
-          <div id="medium" class="tab-pane fade">
-            {% for track in track_ids[1] %}
-              <div>
-                <iframe class="iframe-track" src="https://open.spotify.com/embed/track/{{ track }}"frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
-              </div>
-            {% endfor %}
-          </div>
-          <div id="long" class="tab-pane fade">
-            {% for track in track_ids[2] %}
-              <div>
-                <iframe class="iframe-track" src="https://open.spotify.com/embed/track/{{ track }}"frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
-              </div>
-            {% endfor %}
-          </div>
+        <div id="medium" class="tab-pane fade">
+          {% for track in track_ids[1] %}
+            <div>
+              <iframe class="iframe-track" src="https://open.spotify.com/embed/track/{{ track }}" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+            </div>
+          {% endfor %}
+        </div>
+        <div id="long" class="tab-pane fade">
+          {% for track in track_ids[2] %}
+            <div>
+              <iframe class="iframe-track" src="https://open.spotify.com/embed/track/{{ track }}" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+            </div>
+          {% endfor %}
         </div>
       </div>
     </div>
-
   </div>
 
-  <div>
+  <div class="col-md-4">
+    <div class="panel panel-default">
+          <div class="panel-heading">
+            <p>Recommended Tracks</p>
+          </div>
+      <div class="panel-body">
+        {% for track in rec_track_ids %}
+        <div>
+          <iframe class="iframe-track" src="https://open.spotify.com/embed/track/{{ track }}" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+        </div>
+      {% endfor %}
+      </div>
+    </div>
+  </div>
+
+ <!--  <div>
     <h3>Recommended tracks:</h3>
     {% for track in rec_track_ids %}
       <div>
         <iframe src="https://open.spotify.com/embed/track/{{ track }}" width="500" height="100" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
       </div>
     {% endfor %}
-  </div>
+  </div> -->
 {% endblock %}

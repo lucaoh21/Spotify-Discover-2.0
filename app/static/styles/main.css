@@ -7,26 +7,20 @@ div {
 	display: block;
 }
 
+.panel-tabs .panel-heading {
+    padding: 3px 3px 0px 3px;
+}
+.panel-tabs .nav-tabs {
+	border-bottom: none;
+}
+.panel-tabs .nav-justified {
+	margin-bottom: -1px;
+}
+
 .iframe-track {
 	position: relative;
     height: 80px;
     width: 100%; 
-}
-
-.dash {
-	margin-top: 20px;
-	margin-bottom: 20px;
-	border: 1px solid transparent;
-    border-radius: 4px;
-    padding: 5px 10px 5px 10px;
-}
-
-.dash-heading {
-	background-color: #f5f5f5;
-}
-
-.dash-content {
-	background-color: #fff;
 }
 
 .header {
