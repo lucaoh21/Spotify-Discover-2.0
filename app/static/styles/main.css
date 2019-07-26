@@ -146,6 +146,7 @@ label:hover{
 .form-line-header{
   padding: 5px 10px 5px 10px;
   background-color: #1ed761;
+/*  background: rgba(90, 255, 17, 0.5);*/
   color: #fff;
   text-align: center;
   border: 3px solid black;
@@ -166,6 +167,8 @@ label:hover{
 .form-box{
   padding: 0px;
   white-space: normal;
+  background: #ffffff;
+
 }
 
 .form-scroll{
@@ -179,8 +182,7 @@ label:hover{
   text-align: center;
   width: 100%;
   padding: 15px 40px 15px 40px;
-  margin-top: 10px;
-  margin-bottom: 10px;
+  background: #ffffff;
 }
 
 .form-button{
