@@ -3,49 +3,49 @@
 {% block app_content %}
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
   <script type=text/javascript>
-    $(function() {
-      $('a#start').bind('click', function() {
-        $.getJSON('/playback/start',
-           function(data) {
-            //do nothing
-           });
-        return false;
-      });
-    });
-    $(function() {
-      $('a#pause').bind('click', function() {
-        $.getJSON('/playback/pause',
-           function(data) {
-            //do nothing
-           });
-        return false;
-      });
-    });
-    $(function() {
-      $('a#previous').bind('click', function() {
-        $.getJSON('/playback/previous',
-           function(data) {
-            //do nothing
-           });
-        return false;
-      });
-    });
-    $(function() {
-      $('a#skip').bind('click', function() {
-        $.getJSON('/playback/skip',
-           function(data) {
-            //do nothing
-           });
-        return false;
-      });
-    });
-    function showPopup() {
-      var popup = document.getElementById("devices");
-      popup.classList.toggle("show");
-    }
+    // $(function() {
+    //   $('a#start').bind('click', function() {
+    //     $.getJSON('/playback/start',
+    //        function(data) {
+    //         //do nothing
+    //        });
+    //     return false;
+    //   });
+    // });
+    // $(function() {
+    //   $('a#pause').bind('click', function() {
+    //     $.getJSON('/playback/pause',
+    //        function(data) {
+    //         //do nothing
+    //        });
+    //     return false;
+    //   });
+    // });
+    // $(function() {
+    //   $('a#previous').bind('click', function() {
+    //     $.getJSON('/playback/previous',
+    //        function(data) {
+    //         //do nothing
+    //        });
+    //     return false;
+    //   });
+    // });
+    // $(function() {
+    //   $('a#skip').bind('click', function() {
+    //     $.getJSON('/playback/skip',
+    //        function(data) {
+    //         //do nothing
+    //        });
+    //     return false;
+    //   });
+    // });
+    // function showPopup() {
+    //   var popup = document.getElementById("devices");
+    //   popup.classList.toggle("show");
+    // }
   </script>
 
-  <div class="navbar">
+<!--   <div class="navbar">
     <div class="playback">
       <form class="playback-item">
         <a href=# id=previous>
@@ -92,18 +92,25 @@
             {% endif %}
             <p>{{ device[1] }}</p>
           {% endfor %}
-          <!-- <a href=# id=skip>
+          <a href=# id=skip>
             <button class="btn btn-default playback-button">
              <i class="fa fa-step-forward"></i>
             </button>
-          </a> -->
+          </a>
         </span>
       </div>
     </div>
+  </div> -->
+
+  <div class="jumbotron">
+    <div class="container">
+      <h1>Welcome to Discover 2.0!</h1>
+      <p>A way for you to check out your favorite tracks and discover new music.</p>
+    </div>
   </div>
 
-  <h1 class="header">Hello {{ user }}!</h1>
-
+<!--   <h1 class="header">Hello {{ user }}!</h1>
+ -->
   <div class="col-md-4">
     <div class="form-content">
       <ul class="form-list">

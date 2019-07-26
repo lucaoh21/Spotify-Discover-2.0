@@ -1,10 +1,18 @@
 body {
-  background-color: #5B5B5B !important;
-  color: #000000;
+  background: linear-gradient(349deg, rgba(45,45,45,1) 15%, rgba(119,44,115,1) 55%, rgba(84,118,255,1) 77%) fixed;
+  color: #ffffff;
+  font-family: Helvetica Neue,Helvetica,Arial,sans-serif; 
+
 }
 
 div {
 	display: block;
+}
+
+.jumbotron {
+	background: transparent;
+	padding-top: 30px;
+	padding-bottom: 30px;
 }
 
 .panel-tabs .panel-heading {
@@ -121,7 +129,8 @@ label:hover{
   margin: 0px auto;
   padding-top: 0px;
   font-size: 14px;
-  background-color: #FFF !important;
+  background: rgba(239, 239, 239, 0.5);
+  /*background-color: #FFF !important;*/
   box-shadow: 0 3px 9px rgba(0, 0, 0, 0.1);
   border: 3px solid black;
 }
@@ -155,6 +164,7 @@ label:hover{
 .form-box{
   padding: 0px;
   white-space: normal;
+  background-color: #ffffff;
 }
 .form-scroll{
   overflow-y: scroll;

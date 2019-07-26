@@ -21,13 +21,13 @@ def tracks():
 	session['user'] = current_user['display_name']
 	session['user_location'] = current_user['country']
 
-	devices = getUserDevices(sp)
-	session['devices'] = devices
+	# devices = getUserDevices(sp)
+	# session['devices'] = devices
 
 	track_ids = getTopTracks(sp)
 	rec_track_ids = getRecommendedTracks(sp)
 		
-	return render_template('tracks.html', user=session['user'], devices=devices, track_ids=track_ids, rec_track_ids=rec_track_ids)
+	return render_template('tracks.html', user=session['user'], track_ids=track_ids, rec_track_ids=rec_track_ids)
 
 @app.route('/callback')
 def callback():
