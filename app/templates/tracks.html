@@ -3,6 +3,15 @@
 {% block app_content %}
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
   <script type=text/javascript>
+    $(function() {
+      $('a#saveFavoritePlaylist').bind('click', function() {
+        $.getJSON('/save/favorite',
+           function(data) {
+            //do nothing
+           });
+        return false;
+      });
+    });
     // $(function() {
     //   $('a#start').bind('click', function() {
     //     $.getJSON('/playback/start',
@@ -113,13 +122,13 @@
  -->
   <div class="col-md-4">
     <div class="form-content">
+      <div class="form-line-header">
+        <h1>Your Favorite Songs</h1>
+      </div>
       <ul class="form-list">
-        <li class="form-line-header">
-          <h1>Your Favorite Songs</h1>
-        </li>
         <li class="form-line">
           <div>
-            <ul  class="nav nav-tabs nav-justified">
+            <ul  class="nav nav-pills nav-justified">
               <li class="active">
                 <a  href="#short" data-toggle="tab">Short Term</a>
               </li>
@@ -130,9 +139,6 @@
                 <a href="#long" data-toggle="tab">Long Term</a>
               </li>
             </ul>
-            <!-- <h2 class="form-header">
-              RideShare Terms & Conditions
-            </h2> -->
           </div>
         </li>
         <li class="form-line">
@@ -165,8 +171,18 @@
           </div>
         </li>
         <li class="form-submit">
-           <button class="form-button" id="accept-terms" type="submit">Accept</button>
-           <button class="form-button" id="decline-terms" type="submit">Decline</button>
+          <form class="">
+            <a href=# id=saveFavoritePlaylist>
+              <button class="btn btn-default">
+                <i class="fas fa-clipboard-check"></i>
+                <p>Save Playlist to Spotify</p>
+              </button>
+
+            </a>
+          </form>
+
+          <!-- <button class="form-button" id="accept-terms" type="submit">Accept</button>
+          <button class="form-button" id="decline-terms" type="submit">Decline</button> -->
         </li>
       </ul>
     </div>

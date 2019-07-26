@@ -124,3 +124,8 @@ def getUserDevices(sp):
 		device_list.append([device['id'], device['name'], device['type']])
 	return device_list
 
+def createPlaylist(sp, user, playlist_name, playlist_description):
+	playlist = sp.user_playlist_create(user, playlist_name, description = playlist_description)
+	print("made it")
+	print(playlist)
+

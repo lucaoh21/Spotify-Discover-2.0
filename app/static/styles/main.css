@@ -129,10 +129,8 @@ label:hover{
   margin: 0px auto;
   padding-top: 0px;
   font-size: 14px;
-  background: rgba(239, 239, 239, 0.5);
   /*background-color: #FFF !important;*/
   box-shadow: 0 3px 9px rgba(0, 0, 0, 0.1);
-  border: 3px solid black;
 }
 
 .form-list{
@@ -140,6 +138,9 @@ label:hover{
   list-style: none;
   margin: 0px;
   position: relative;
+  border: 3px solid black;
+  border-radius: 15px;
+  background: rgba(239, 239, 239, 0.5);
 }
 
 .form-line-header{
@@ -147,14 +148,15 @@ label:hover{
   background-color: #1ed761;
   color: #fff;
   text-align: center;
-  border-bottom: 3px solid black;
+  border: 3px solid black;
+  border-radius: 15px;
+  margin-bottom: 7px;
 }
 
 .form-line{
   padding: 0px 0px 0px 0px;
   margin-top: 0px;
   margin-bottom: 0px;
-  background-color: #A9A9A9;
 }
 
 .form-header{
@@ -164,8 +166,8 @@ label:hover{
 .form-box{
   padding: 0px;
   white-space: normal;
-  background-color: #ffffff;
 }
+
 .form-scroll{
   overflow-y: scroll;
   width: 100%;

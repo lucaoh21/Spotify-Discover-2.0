@@ -1,6 +1,6 @@
 from flask import render_template, flash, redirect, request, session, make_response
 from app import app
-from app.functions import createStateKey, getToken, getUserInformation, getTopTracks, getRecommendedTracks, startPlayback, pausePlayback, previousTrack, skipTrack, getUserDevices
+from app.functions import createStateKey, getToken, getUserInformation, getTopTracks, getRecommendedTracks, startPlayback, pausePlayback, previousTrack, skipTrack, getUserDevices, createPlaylist
 import spotipy
 import spotipy.util as util
 
@@ -91,4 +91,12 @@ def playbackPrevious():
 	global sp
 	previousTrack(sp)
 	return "previous"
+
+###################
+@app.route('/save/favorite')
+def saveFavoritePlaylist():
+	global sp
+	createPlaylist(sp, session['user'], "Recent Favorites", "")
+	return "playlist saved"
+
 
