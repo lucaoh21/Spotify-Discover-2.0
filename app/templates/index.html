@@ -1,6 +1,19 @@
 {% extends "base.html" %}
 
+{% block styles %}
+  <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/cover.css') }}">
+{% endblock %}
+
 {% block app_content %}
+  <header class="header-view">
+    <div class="container">
+      <h1>Discover Daily</h1>
+      <h1>Welcome to Discover Daily!</h1>
+      <a href="" id="chevron">
+      </a>
+
+    </div>
+  </header>
   <h1>Discover songs based on artists and songs you love!</h1>
   <form action="/authorize" method="get">
     <button type="submit">
