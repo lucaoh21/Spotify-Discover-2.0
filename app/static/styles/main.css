@@ -1,7 +1,7 @@
 body {
   background: linear-gradient(349deg, rgba(45,45,45,1) 15%, rgba(119,44,115,1) 55%, rgba(84,118,255,1) 77%) fixed;
-  color: #ffffff;
-  font-family: Helvetica Neue,Helvetica,Arial,sans-serif; 
+/*  color: #ffffff;
+*/  font-family: Helvetica Neue,Helvetica,Arial,sans-serif; 
 
 }
 
@@ -13,6 +13,7 @@ div {
 	background: transparent;
 	padding-top: 30px;
 	padding-bottom: 30px;
+  color: #ffffff;
 }
 
 .panel-tabs .panel-heading {
@@ -166,8 +167,7 @@ label:hover{
 
 .form-box{
   padding: 0px;
-  white-space: normal;
-  background: #ffffff;
+  #background: #ffffff;
 
 }
 
@@ -182,7 +182,7 @@ label:hover{
   text-align: center;
   width: 100%;
   padding: 15px 40px 15px 40px;
-  background: #ffffff;
+  #background: #ffffff;
 }
 
 .form-button{
@@ -194,4 +194,32 @@ label:hover{
   display: inline-block;
   margin: 5px;
 }
+
+
+.modal-content {
+  display: flex;
+  max-width: 720px;
+  width: 100%;
+  border-radius: 10px;
+  overflow: hidden;
+  position: absolute;
+}
+
+.modal-title {
+
+}
+
+.modal-left {
+  padding: 30px 30px 20px;
+  background: #fff;
+  flex: 1.5;
+}
+
+.modal-right {
+  flex: 2;
+  background: #000;
+}
+
+
+
 

@@ -1,15 +1,17 @@
 {% extends "base.html" %}
 
 {% block app_content %}
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
   <script type=text/javascript>
     $(function() {
       $('a#saveFavoritePlaylist').bind('click', function() {
+        var $activeTabPane = $('.tab-content .tab-pane.active');
+        var timeID = $activeTabPane.attr('id');
+
         $.getJSON('/save/favorite',
            function(data) {
             //do nothing
            });
-        return false;
+        return timeID;
       });
     });
     // $(function() {
@@ -185,17 +187,51 @@
     </div>
   </div>
 
-  <div class="col-md-12">
-    <br>
-    <br>
-    <br>
+  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#basicExampleModal">
+      Save Playlist
+  </button>
+
+  <div class="modal fade" id="basicExampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-left">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Get your Top Tracks!</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form action="" method="post" novalidate>
+              {{ form.hidden_tag() }}
+              Discover Daily will create a Spotify playlist with your most played tracks for the selected time period.
+              <p>{{ form.short_term() }} {{ form.short_term.label }}</p>
+              <p>{{ form.medium_term() }} {{ form.medium_term.label }}</p>
+              <p>{{ form.long_term() }} {{ form.long_term.label }}</p>
+              Your favorite music is always changing. Would you like Discover Daily to automatically sync and update your Most Played playlist(s)?
+              <p>{{ form.sync() }} {{ form.sync.label }}</p>
+              <p>
+                {{ form.playlist_name.label }}<br>
+                {{ form.playlist_name(size=32) }}
+              </p>
+              <p>{{ form.submit() }}</p>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary">Create My Playlist</button>
+          </div>
+        </div>
+        <div class="modal-right">
+
+        </div>
+      </div>
+    </div>
   </div>
 
 
 
-
-
-
+  
+  
  <!--  <div class="col-md-4">
     <div class="panel panel-default">
           <div class="panel-heading">

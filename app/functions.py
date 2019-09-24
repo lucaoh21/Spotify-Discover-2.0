@@ -34,7 +34,7 @@ def getUserInformation(sp):
 	return sp.current_user()
 
 
-def getTopTracks(sp):
+def getTopTracks2(sp):
 	track_ids = []
 	time_range = ['short_term', 'medium_term', 'long_term']
 	for time in time_range:
@@ -46,6 +46,17 @@ def getTopTracks(sp):
 		track_ids.append(track_range_ids)
 
 	return track_ids
+
+
+def getTopTracks(sp, time, limit=25):
+	track_ids = []
+	tracks = sp.current_user_top_tracks(limit, time_range=time)
+
+	for track in tracks['items']:
+		track_ids.append(track['id'])
+
+	return track_ids
+
 
 
 def getRecommendedTracks(sp):
@@ -126,6 +137,22 @@ def getUserDevices(sp):
 
 def createPlaylist(sp, user, playlist_name, playlist_description):
 	playlist = sp.user_playlist_create(user, playlist_name, description = playlist_description)
-	print("made it")
-	print(playlist)
+	# print(playlist)
+	return playlist['id']
+
+
+def addTracksPlaylist(sp, user, playlist_id):
+	track_ids = getTopTracks(sp, 'short_term')
+	sp.user_playlist_add_tracks(user, playlist_id, track_ids, position=None)
+
+def searchSpotify(sp):
+	artists = sp.search('Kany*', limit=5, offset=0, type='artist', market=None)
+	# for item in artists['artists']['items']:
+		# print(item['name'])
+
+	tracks = sp.search('heartl*', limit=5, offset=0, type='track', market=None)
+	# for item in tracks['tracks']['items']:
+		# print(item['name'])
+
+
 

@@ -1,6 +1,7 @@
 from flask import render_template, flash, redirect, request, session, make_response
 from app import app
-from app.functions import createStateKey, getToken, getUserInformation, getTopTracks, getRecommendedTracks, startPlayback, pausePlayback, previousTrack, skipTrack, getUserDevices, createPlaylist
+from app.functions import createStateKey, getToken, getUserInformation, getTopTracks2, getRecommendedTracks, startPlayback, pausePlayback, previousTrack, skipTrack, getUserDevices, createPlaylist, addTracksPlaylist, getTopTracks, searchSpotify
+from app.forms import PlaylistForm
 import spotipy
 import spotipy.util as util
 
@@ -21,13 +22,13 @@ def tracks():
 	session['user'] = current_user['display_name']
 	session['user_location'] = current_user['country']
 
-	# devices = getUserDevices(sp)
-	# session['devices'] = devices
-
-	track_ids = getTopTracks(sp)
+	track_ids = getTopTracks2(sp)
 	rec_track_ids = getRecommendedTracks(sp)
+
+	searchSpotify(sp)
+	playlist_form = PlaylistForm()
 		
-	return render_template('tracks.html', user=session['user'], track_ids=track_ids, rec_track_ids=rec_track_ids)
+	return render_template('tracks.html', user=session['user'], track_ids=track_ids, rec_track_ids=rec_track_ids, form=playlist_form)
 
 @app.route('/callback')
 def callback():
@@ -93,10 +94,15 @@ def playbackPrevious():
 	return "previous"
 
 ###################
-@app.route('/save/favorite')
+@app.route('/save/favorite', methods=['POST'])
 def saveFavoritePlaylist():
-	global sp
-	createPlaylist(sp, session['user'], "Recent Favorites", "")
-	return "playlist saved"
+	print(request.data)
+	time_range = 'short_term'
+	print("Time range ", time_range)
+	# global sp
+	# playlist_id = createPlaylist(sp, session['user'], "Top 25 Most Played", "Created by Discover Daily")
+	# addTracksPlaylist(sp, session['user'], playlist_id)
+
+	return "playlist created and filled"
 
 
