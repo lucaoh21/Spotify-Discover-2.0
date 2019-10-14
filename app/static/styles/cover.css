@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Montserrat:400,500,600,700&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Montserrat:400,500,600,700,800&display=swap');
 body {
   font-family: "Montserrat", sans-serif;
   margin: 0;
@@ -15,31 +15,57 @@ div {
     box-sizing: inherit;
 }
 
-.header-view {
+#chevron {
+  bottom: 9%;
+  cursor: pointer;
+  display: block;
+  left: 50vw;
+  padding: 20px 0;
+  position: absolute;
+  transition-duration: .4s;
+  transition-property: bottom;
+  transition-timing-function: ease;
+}
+
+#chevron:hover {
+  bottom: 6%;
+}
+
+.section {
   padding: 3rem 1.5rem;
+}
+
+.header-view {
   background-image: url("header-circled.svg"), linear-gradient(
-      rgba(84, 118, 255, 0.7), 
-      rgba(119, 44, 115, 0.6)
-    ), url("header.png");
-  background-position: bottom -1px center;
+      rgba(84, 118, 255, 0.9), 
+      rgba(119, 44, 115, 0.8)
+    ), url("header.jpg");
+  background-position: bottom 0px center;
   background-repeat: no-repeat;
   background-size: 100% auto, auto, cover;
   height: 90vh;
   position: relative;
   width: 100%;
-  opacity: 0.7;
 }
 
-header h1 {
+#header-text {
   color: #fff;
   font-family: Montserrat,sans-serif;
-  font-size: 3em;
   left: 5%;
   margin: 0;
-  position: relative;
+  position: absolute;
   top: 35%;
-  font-weight: 600;
   line-height: 1.125;
+}
+
+#header-text h1 {
+  font-size: 4em;
+  font-weight: 800;
+}
+
+#header-text h2 {
+  font-size: 2em;
+  font-weight: 400;
 }
 
 .jumbotron {
@@ -57,5 +83,21 @@ header h1 {
   font-weight: 600;
 }
 
+#logo {
+  width: 250px;
+  height: auto;
+}
 
+div.narrow {
+  margin: 25px 75px 25px 75px;
+}
+
+
+.iframe-track {
+  position: relative;
+    height: 100px;
+    width: 100px; 
+    padding-left: 25px;
+    padding-right: 25px;
+}
 

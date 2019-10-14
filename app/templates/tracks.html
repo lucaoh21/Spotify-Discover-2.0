@@ -2,22 +2,23 @@
 
 {% block styles %}
   <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/main.css') }}">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
 {% endblock %}
 
 {% block app_content %}
   <script type=text/javascript>
-    $(function() {
-      $('a#saveFavoritePlaylist').bind('click', function() {
-        var $activeTabPane = $('.tab-content .tab-pane.active');
-        var timeID = $activeTabPane.attr('id');
+    // $(function() {
+    //   $('a#saveFavoritePlaylist').bind('click', function() {
+    //     var $activeTabPane = $('.tab-content .tab-pane.active');
+    //     var timeID = $activeTabPane.attr('id');
 
-        $.getJSON('/save/favorite',
-           function(data) {
-            //do nothing
-           });
-        return timeID;
-      });
-    });
+    //     $.getJSON('/save/favorite',
+    //        function(data) {
+    //         //do nothing
+    //        });
+    //     return timeID;
+    //   });
+    // });
     // $(function() {
     //   $('a#start').bind('click', function() {
     //     $.getJSON('/playback/start',

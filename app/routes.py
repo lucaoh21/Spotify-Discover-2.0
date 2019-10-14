@@ -12,7 +12,7 @@ sp = None
 def index():
 	return render_template('index.html', title='Welcome')
 
-@app.route('/tracks')
+@app.route('/tracks',  methods=['GET', 'POST'])
 def tracks():
 	global sp
 	if sp == None:
@@ -27,6 +27,18 @@ def tracks():
 
 	searchSpotify(sp)
 	playlist_form = PlaylistForm()
+
+	if playlist_form.validate_on_submit():
+		time_range = ""
+		if playlist_form.short_term.data:
+			time_range = "short_term"
+		elif playlist_form.short_term.data:
+			time_range = "medium_term"
+		else:
+			time_range = "long_term"
+		playlist_id = createPlaylist(sp, session['user'], playlist_form.playlist_name.data, "Created by Discover Daily")
+		addTracksPlaylist(sp, session['user'], playlist_id, time_range)
+		return redirect('/tracks')
 		
 	return render_template('tracks.html', user=session['user'], track_ids=track_ids, rec_track_ids=rec_track_ids, form=playlist_form)
 

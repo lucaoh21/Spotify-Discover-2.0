@@ -1,14 +1,10 @@
 @import url('https://fonts.googleapis.com/css?family=Montserrat:400,500,600,700&display=swap');
 body {
   font-family: "Montserrat", sans-serif;
-/*  overflow: hidden;
-*/  margin: 0;
+  margin: 0;
   padding: 0;
   display: block;
   background: linear-gradient(349deg, rgba(45, 45, 45, 1) 15%, rgba(119, 44, 115, 1) 55%, rgba(84, 118, 255, 1) 77%) fixed;
-/*  color: #ffffff;*/ 
-/*  font-family: Helvetica Neue,Helvetica,Arial,sans-serif; 
-*/
 }
 
 div {
@@ -19,20 +15,6 @@ div {
     box-sizing: inherit;
 }
 
-.header-view {
-  padding: 3rem 1.5rem;
-  background-image: url("header-circled.svg"), linear-gradient(
-      rgba(0, 0, 255, 0.45), 
-      rgba(0, 255, 0, 0.45)
-    ), url("header.jpg");
-  background-position: bottom -1px center;
-  background-repeat: no-repeat;
-  background-size: 100% auto, auto, cover;
-  height: 100vh;
-  position: relative;
-  width: 100%;
-  opacity: 0.7;
-}
 
 .jumbotron {
 	background: transparent;

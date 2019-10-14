@@ -141,8 +141,8 @@ def createPlaylist(sp, user, playlist_name, playlist_description):
 	return playlist['id']
 
 
-def addTracksPlaylist(sp, user, playlist_id):
-	track_ids = getTopTracks(sp, 'short_term')
+def addTracksPlaylist(sp, user, playlist_id, time_range):
+	track_ids = getTopTracks(sp, time_range)
 	sp.user_playlist_add_tracks(user, playlist_id, track_ids, position=None)
 
 def searchSpotify(sp):
