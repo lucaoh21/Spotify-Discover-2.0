@@ -32,7 +32,7 @@ def tracks():
 		time_range = ""
 		if playlist_form.short_term.data:
 			time_range = "short_term"
-		elif playlist_form.short_term.data:
+		elif playlist_form.medium_term.data:
 			time_range = "medium_term"
 		else:
 			time_range = "long_term"
