@@ -15,6 +15,7 @@ def createStateKey(size):
 
 
 def getToken(code):
+	print("**** called get token")
 	token_url = 'https://accounts.spotify.com/api/token'
 	authorization = app.config['AUTHORIZATION']
 	redirect_uri = app.config['REDIRECT_URI']
@@ -24,7 +25,24 @@ def getToken(code):
 	post_response = requests.post(token_url, headers=headers, data=body)
 
 	try:
-		return post_response.json()['access_token']
+		print("expires: ", post_response.json()['expires_in'])
+		return post_response.json()['access_token'], post_response.json()['refresh_token'], post_response.json()['expires_in']
+	except ValueError:
+		print('JSON decoding failed')
+		return 'value error'
+
+def refreshToken(refresh_token):
+	print("**** called refresh token")
+	token_url = 'https://accounts.spotify.com/api/token'
+	authorization = app.config['AUTHORIZATION']
+
+	headers = {'Authorization': authorization, 'Accept': 'application/json', 'Content-Type': 'application/x-www-form-urlencoded'}
+	body = {'refresh_token': refresh_token, 'grant_type': 'refresh_token'}
+	post_response = requests.post(token_url, headers=headers, data=body)
+
+	try:
+		print("expires: ", post_response.json()['expires_in'])
+		return post_response.json()['access_token'], post_response.json()['expires_in']
 	except ValueError:
 		print('JSON decoding failed')
 		return 'value error'

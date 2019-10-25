@@ -3,6 +3,7 @@
 {% block styles %}
   <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/main.css') }}">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
 {% endblock %}
 
 {% block app_content %}
@@ -131,6 +132,104 @@
     <div class="col-md-4">
       <div class="form-content">
         <div class="form-line-header">
+          <h1>Short Term</h1>
+        </div>
+        <ul class="form-list">
+          <li class="form-line">
+            <div class="form-box">
+              <div class="form-scroll">
+                <div id="short">
+                  {% for track in track_ids[0] %}
+                    <div>
+                      <iframe class="iframe-track" src="https://open.spotify.com/embed/track/{{ track }}" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+                    </div>
+                  {% endfor %}
+                </div>
+              </div>
+            </div>
+          </li>
+          <li class="form-submit">
+            <button type="button" class="btn btn-default" data-toggle="modal" data-target="#basicExampleModal">
+              <i class="fas fa-clipboard-check"></i>
+              <p>Save Playlist to Spotify</p>
+            </button>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="form-content">
+        <div class="form-line-header">
+          <h1>Medium Term</h1>
+        </div>
+        <ul class="form-list">
+          <li class="form-line">
+            <div class="form-box">
+              <div class="form-scroll">
+                <div id="medium">
+                  {% for track in track_ids[1] %}
+                    <div>
+                      <iframe class="iframe-track" src="https://open.spotify.com/embed/track/{{ track }}" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+                    </div>
+                  {% endfor %}
+                </div>
+              </div>
+            </div>
+          </li>
+          <li class="form-submit">
+            <button type="button" class="btn btn-default" data-toggle="modal" data-target="#basicExampleModal">
+              <i class="fas fa-clipboard-check"></i>
+              <p>Save Playlist to Spotify</p>
+            </button>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="form-content">
+        <div class="form-line-header">
+          <h1>Long Term</h1>
+        </div>
+        <ul class="form-list">
+          <li class="form-line">
+            <div class="form-box">
+              <div class="form-scroll">
+                <div id="long">
+                  {% for track in track_ids[2] %}
+                    <div>
+                      <iframe class="iframe-track" src="https://open.spotify.com/embed/track/{{ track }}" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+                    </div>
+                  {% endfor %}
+                </div>
+              </div>
+            </div>
+          </li>
+          <li class="form-submit">
+            <button type="button" class="btn btn-default" data-toggle="modal" data-target="#basicExampleModal">
+              <i class="fas fa-clipboard-check"></i>
+              <p>Save Playlist to Spotify</p>
+            </button>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="col-md-12">
+      <div class="form-content">
+        <ul class="form-list">
+          <li class="form-line">
+            <p>Favorite Artists</p>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+
+    <!-- <div class="col-md-4">
+      <div class="form-content">
+        <div class="form-line-header">
           <h1>Your Favorite Songs</h1>
         </div>
         <ul class="form-list">
@@ -192,10 +291,10 @@
         </ul>
       </div>
     </div>
-
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#basicExampleModal">
+ -->
+<!--     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#basicExampleModal">
         Save Playlist
-    </button>
+    </button> -->
 
     <div class="modal fade" id="basicExampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">

@@ -17,7 +17,7 @@ div {
 
 
 .jumbotron {
-	background: transparent;
+	background: #363636;
 	padding-top: 30px;
 	padding-bottom: 30px;
   color: #ffffff;
@@ -31,7 +31,7 @@ div {
   font-weight: 600;
 }
 
-.panel-tabs .panel-heading {
+/*.panel-tabs .panel-heading {
     padding: 3px 3px 0px 3px;
 }
 .panel-tabs .nav-tabs {
@@ -39,7 +39,7 @@ div {
 }
 .panel-tabs .nav-justified {
 	margin-bottom: -1px;
-}
+}*/
 
 .iframe-track {
 	position: relative;
@@ -63,7 +63,7 @@ div {
   color: black;
 }
 
-.playback {
+/*.playback {
 	text-align: center;
 	margin-top: 10px;
 	margin-bottom: 10px;
@@ -78,9 +78,9 @@ div {
 .playback-button {
 	height: 25px;
 	width: 50px;
-}
+}*/
 
-.popup {
+/*.popup {
   position: relative;
   display: inline-block;
   cursor: pointer;
@@ -104,10 +104,10 @@ div {
   left: 50%;
   margin-left: -80px;
   box-shadow: 0 0 20px #000;
-}
+}*/
 
 /* to make the popup have an arrow */
-.popup .popup-content::after {
+/*.popup .popup-content::after {
   content: "";
   position: absolute;
   bottom: 100%;
@@ -124,10 +124,10 @@ div {
   visibility: visible;
   -webkit-animation: fadeIn 1s;
   animation: fadeIn 1s;
-}
+}*/
 
 /* for object to fade in */
-@-webkit-keyframes fadeIn {
+/*@-webkit-keyframes fadeIn {
   from {opacity: 0;} 
   to {opacity: 1;}
 }
@@ -139,14 +139,14 @@ div {
 
 label:hover{
   cursor: pointer;
-}
+}*/
 
 .form-content{
   margin: 0px auto;
   padding-top: 0px;
   font-size: 14px;
-  /*background-color: #FFF !important;*/
   box-shadow: 0 3px 9px rgba(0, 0, 0, 0.1);
+  margin-bottom: 15px;
 }
 
 .form-list{
@@ -162,7 +162,6 @@ label:hover{
 .form-line-header{
   padding: 5px 10px 5px 10px;
   background-color: #1ed761;
-/*  background: rgba(90, 255, 17, 0.5);*/
   color: #fff;
   text-align: center;
   border: 3px solid black;
@@ -182,22 +181,19 @@ label:hover{
 
 .form-box{
   padding: 0px;
-  #background: #ffffff;
-
 }
 
 .form-scroll{
   overflow-y: scroll;
   width: 100%;
   padding: 10px;
-  height: 350px;
+  height: 400px;
 }
 
 .form-submit{
   text-align: center;
   width: 100%;
   padding: 15px 40px 15px 40px;
-  #background: #ffffff;
 }
 
 .form-button{
