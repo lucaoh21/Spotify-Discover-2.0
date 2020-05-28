@@ -41,7 +41,7 @@ def refreshToken(refresh_token):
 	post_response = requests.post(token_url, headers=headers, data=body)
 
 	try:
-		print("expires: ", post_response.json()['expires_in'])
+		print("refresh expires: ", post_response.json()['expires_in'])
 		return post_response.json()['access_token'], post_response.json()['expires_in']
 	except ValueError:
 		print('JSON decoding failed')

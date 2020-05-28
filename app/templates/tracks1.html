@@ -1,0 +1,365 @@
+{% extends "base.html" %}
+
+{% block styles %}
+  <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/main.css') }}">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+{% endblock %}
+
+{% block app_content %}
+  <script type=text/javascript>
+    // $(function() {
+    //   $('a#saveFavoritePlaylist').bind('click', function() {
+    //     var $activeTabPane = $('.tab-content .tab-pane.active');
+    //     var timeID = $activeTabPane.attr('id');
+
+    //     $.getJSON('/save/favorite',
+    //        function(data) {
+    //         //do nothing
+    //        });
+    //     return timeID;
+    //   });
+    // });
+    // $(function() {
+    //   $('a#start').bind('click', function() {
+    //     $.getJSON('/playback/start',
+    //        function(data) {
+    //         //do nothing
+    //        });
+    //     return false;
+    //   });
+    // });
+    // $(function() {
+    //   $('a#pause').bind('click', function() {
+    //     $.getJSON('/playback/pause',
+    //        function(data) {
+    //         //do nothing
+    //        });
+    //     return false;
+    //   });
+    // });
+    // $(function() {
+    //   $('a#previous').bind('click', function() {
+    //     $.getJSON('/playback/previous',
+    //        function(data) {
+    //         //do nothing
+    //        });
+    //     return false;
+    //   });
+    // });
+    // $(function() {
+    //   $('a#skip').bind('click', function() {
+    //     $.getJSON('/playback/skip',
+    //        function(data) {
+    //         //do nothing
+    //        });
+    //     return false;
+    //   });
+    // });
+    // function showPopup() {
+    //   var popup = document.getElementById("devices");
+    //   popup.classList.toggle("show");
+    // }
+  </script>
+
+<!--   <div class="navbar">
+    <div class="playback">
+      <form class="playback-item">
+        <a href=# id=previous>
+          <button class="btn btn-default playback-button">
+            <i class="fa fa-step-backward"></i>
+          </button>
+        </a>
+      </form>
+      <form class="playback-item">
+        <a href=# id=start>
+          <button class="btn btn-default playback-button">
+            <i class="fa fa-play-circle"></i>
+          </button>
+        </a>
+      </form>
+      <form class="playback-item">
+        <a href=# id=pause>
+          <button class="btn btn-default playback-button">
+            <i class="fa fa-stop-circle"></i>
+          </button>
+        </a>
+      </form>
+      <form class="playback-item">
+        <a href=# id=skip>
+          <button class="btn btn-default playback-button">
+            <i class="fa fa-step-forward"></i>
+          </button>
+        </a>
+      </form>
+      <div class="popup playback-item" onclick="showPopup()">
+        <i class="fas fa-desktop"></i>
+        <span class="popup-content" id="devices">
+          {% for device in devices %}
+            {% if 'Computer' == device[2] %}
+              <i class="fas fa-desktop"></i>
+            {% elif 'Smartphone' == device[2] %}
+              <i class="fas fa-mobile-alt"></i>
+            {% elif 'Tablet' == device[2] %}
+              <i class="fas fa-tablet-alt"></i>
+            {% elif 'TV' == device[2] %}
+              <i class="fas fa-tv"></i>
+            {% else %}
+              <i class="fas fa-microphone-alt"></i>
+            {% endif %}
+            <p>{{ device[1] }}</p>
+          {% endfor %}
+          <a href=# id=skip>
+            <button class="btn btn-default playback-button">
+             <i class="fa fa-step-forward"></i>
+            </button>
+          </a>
+        </span>
+      </div>
+    </div>
+  </div> -->
+  <div class="container">
+
+    <div class="jumbotron">
+      <div class="container">
+        <h1 class="jumbo-title">Discover Daily: Top Tracks</h1>
+        <p class="jumbo-info">Create a Spotify playlist that contains all of your favorite tracks. <br> The playlist is automatically updated as your taste in music changes.</p>
+      </div>
+    </div>
+
+  <!--   <h1 class="header">Hello {{ user }}!</h1>
+   -->
+    <div class="col-md-4">
+      <div class="form-content">
+        <div class="form-line-header">
+          <h1>Short Term</h1>
+        </div>
+        <ul class="form-list">
+          <li class="form-line">
+            <div class="form-box">
+              <div class="form-scroll">
+                <div id="short">
+                  {% for track in track_ids[0] %}
+                    <div>
+                      <iframe class="iframe-track" src="https://open.spotify.com/embed/track/{{ track }}" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+                    </div>
+                  {% endfor %}
+                </div>
+              </div>
+            </div>
+          </li>
+          <li class="form-submit">
+            <button type="button" class="btn btn-default" data-toggle="modal" data-target="#basicExampleModal">
+              <i class="fas fa-clipboard-check"></i>
+              <p>Save Playlist to Spotify</p>
+            </button>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="form-content">
+        <div class="form-line-header">
+          <h1>Medium Term</h1>
+        </div>
+        <ul class="form-list">
+          <li class="form-line">
+            <div class="form-box">
+              <div class="form-scroll">
+                <div id="medium">
+                  {% for track in track_ids[1] %}
+                    <div>
+                      <iframe class="iframe-track" src="https://open.spotify.com/embed/track/{{ track }}" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+                    </div>
+                  {% endfor %}
+                </div>
+              </div>
+            </div>
+          </li>
+          <li class="form-submit">
+            <button type="button" class="btn btn-default" data-toggle="modal" data-target="#basicExampleModal">
+              <i class="fas fa-clipboard-check"></i>
+              <p>Save Playlist to Spotify</p>
+            </button>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="col-md-4">
+      <div class="form-content">
+        <div class="form-line-header">
+          <h1>Long Term</h1>
+        </div>
+        <ul class="form-list">
+          <li class="form-line">
+            <div class="form-box">
+              <div class="form-scroll">
+                <div id="long">
+                  {% for track in track_ids[2] %}
+                    <div>
+                      <iframe class="iframe-track" src="https://open.spotify.com/embed/track/{{ track }}" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+                    </div>
+                  {% endfor %}
+                </div>
+              </div>
+            </div>
+          </li>
+          <li class="form-submit">
+            <button type="button" class="btn btn-default" data-toggle="modal" data-target="#basicExampleModal">
+              <i class="fas fa-clipboard-check"></i>
+              <p>Save Playlist to Spotify</p>
+            </button>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="col-md-12">
+      <div class="form-content">
+        <ul class="form-list">
+          <li class="form-line">
+            <p>Favorite Artists</p>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+
+    <!-- <div class="col-md-4">
+      <div class="form-content">
+        <div class="form-line-header">
+          <h1>Your Favorite Songs</h1>
+        </div>
+        <ul class="form-list">
+          <li class="form-line">
+            <div>
+              <ul  class="nav nav-tabs nav-justified">
+                <li class="active">
+                  <a  href="#short" data-toggle="tab">Short Term</a>
+                </li>
+                <li>
+                  <a href="#medium" data-toggle="tab">Medium Term</a>
+                </li>
+                <li>
+                  <a href="#long" data-toggle="tab">Long Term</a>
+                </li>
+              </ul>
+            </div>
+          </li>
+          <li class="form-line">
+            <div class="form-box">
+              <div class="form-scroll">
+                <div class="tab-content">
+                  <div id="short" class="tab-pane fade in active">
+                    {% for track in track_ids[0] %}
+                      <div>
+                        <iframe class="iframe-track" src="https://open.spotify.com/embed/track/{{ track }}" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+                      </div>
+                    {% endfor %}
+                  </div>
+                  <div id="medium" class="tab-pane fade">
+                    {% for track in track_ids[1] %}
+                      <div>
+                        <iframe class="iframe-track" src="https://open.spotify.com/embed/track/{{ track }}" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+                      </div>
+                    {% endfor %}
+                  </div>
+                  <div id="long" class="tab-pane fade">
+                    {% for track in track_ids[2] %}
+                      <div>
+                        <iframe class="iframe-track" src="https://open.spotify.com/embed/track/{{ track }}" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+                      </div>
+                    {% endfor %}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </li>
+          <li class="form-submit">
+            <form class="">
+              <a href=# id=saveFavoritePlaylist>
+                <button class="btn btn-default">
+                  <i class="fas fa-clipboard-check"></i>
+                  <p>Save Playlist to Spotify</p>
+                </button>
+
+              </a>
+            </form>
+          </li>
+        </ul>
+      </div>
+    </div>
+ -->
+<!--     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#basicExampleModal">
+        Save Playlist
+    </button> -->
+
+    <div class="modal fade" id="basicExampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-left">
+            <h1 class="modal-title" id="exampleModalLabel">Get your Top Tracks!</h1>
+  <!--           <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Get your Top Tracks!</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div> -->
+   <!--          <div class="modal-body"> -->
+              <form action="" method="post" novalidate>
+                {{ form.hidden_tag() }}
+                <p class="modal-info">Discover Daily will create a Spotify playlist with your most played tracks for the selected time period.</p>
+                <p>{{ form.short_term() }} {{ form.short_term.label }}</p>
+                <p>{{ form.medium_term() }} {{ form.medium_term.label }}</p>
+                <p>{{ form.long_term() }} {{ form.long_term.label }}</p>
+                <p class="modal-info">Your favorite music is always changing. Would you like Discover Daily to automatically sync and update your Most Played playlist(s)?</p>
+                <p>{{ form.sync() }} {{ form.sync.label }}</p>
+                <p>
+                  {{ form.playlist_name.label }}<br>
+                  {{ form.playlist_name(size=32) }}
+                </p>
+                <p>{{ form.submit() }}</p>
+              </form>
+            <!-- </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-primary">Create My Playlist</button>
+            </div> -->
+          </div>
+          <div class="modal-right">
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+    
+    
+   <!--  <div class="col-md-4">
+      <div class="panel panel-default">
+            <div class="panel-heading">
+              <p>Recommended Tracks</p>
+            </div>
+        <div class="panel-body">
+          {% for track in rec_track_ids %}
+          <div>
+            <iframe class="iframe-track" src="https://open.spotify.com/embed/track/{{ track }}" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+          </div>
+        {% endfor %}
+        </div>
+      </div>
+    </div> -->
+
+   <!--  <div>
+      <h3>Recommended tracks:</h3>
+      {% for track in rec_track_ids %}
+        <div>
+          <iframe src="https://open.spotify.com/embed/track/{{ track }}" width="500" height="100" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
+        </div>
+      {% endfor %}
+    </div> -->
+  </div>
+{% endblock %}

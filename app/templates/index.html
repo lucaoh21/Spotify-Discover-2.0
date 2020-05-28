@@ -1,60 +1,76 @@
 {% extends "base.html" %}
 
-{% block styles %}
-  <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/cover.css') }}">
+{% block title %}Home{% endblock %}
+
+{% block head %}
+	{{ super() }}
 {% endblock %}
 
-{% block app_content %}
-  <header class="header-view section" id="discover">
-    <div class="container">
-      <img src="../static/styles/download.png" alt="discover-logo" id="logo">
-      <div id="header-text">
-        <h1 class="header-text-style">Explore music in a new way</h1>
-        <h2 class="header-text-style">Find your top Spotify tracks and create custom playlists with just a song or artist!</h2>
-      </div>
-      <a href="#web-info" id="chevron">
-        <img src="../static/styles/chevron.svg" alt="scoll down">
-      </a>
 
+{% block content %}
+
+<main role="main">
+
+
+<section class="jumbotron text-center">
+    <div class="container page-info">
+      <h1>Explore music in a new way</h1>
+      <br>
+      <h3>Find your top Spotify tracks and create custom playlists with just a song or artist!</h3>
     </div>
-  </header>
-  <div class="container narrow">
-    <div class="section">
-      <form action="/tracks" method="get">
-        <button type="submit" class="widget">
-          <h2 class="button-text-style">Discover Your Top Spotify Tracks</h2>
-        </button>
-      </form>
-      <form action="/create" method="get">
-        <button class="widget">
-          <h2 class="button-text-style">Create a Playlist based on a Song or Artist</h2>
-        </button>
-      </form>
-      <form action="/tracks" method="get">
-        <button class="widget">
-          <h2 class="button-text-style">Create a Playlist based on Your History</h2>
-        </button>
-      </form>
+</section>
+
+  <div class="py-5 bg-light">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4">
+          <div class="card mb-4 shadow-sm">
+          	<a class="" href="/tracks">
+			<svg class="card-center card-img-top" width="100%" height="225" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Top Tracks">
+			  	<defs>
+					<linearGradient id="gradient1" gradientTransform="rotate(80)">
+					<stop offset="23%" style="stop-color:rgb(84,118,255);stop-opacity:1" />
+					<stop offset="45%" style="stop-color:rgb(119,44,115);stop-opacity:1" />
+					<stop offset="95%"  style="stop-color:rgb(45,45,45);stop-opacity:1" />
+					</linearGradient>
+			  	</defs>
+				<title>Discover</title>
+				<rect width="100%" height="100%" fill="#000"/>
+				<text x="50%" y="50%" fill="#fff" font-size="2em" pointer-events="none">Top Tracks</text>
+
+			</svg>
+			</a>
+            <div class="card-body">
+    			<p class="card-text">Discover your most listened to tracks and create a TopTracks playlist that automatically updates.</p>
+    		</div>
+    	  </div>
+    	</div>
+
+    	<div class="col-md-4">
+          <div class="card mb-4 shadow-sm">
+          	<a class="" href="/create">
+			<svg class="card-center card-img-top" width="100%" height="225" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Top Tracks"><title>Discover</title><rect width="100%" height="100%" fill="#000"/><text x="50%" y="50%" fill="#fff" font-size="2em" pointer-events="none">Find Tracks</text></svg>
+			</a>
+            <div class="card-body">
+    			<p class="card-text">Enter several song names or artists and create a playlist of similar songs.</p>
+    		</div>
+    	  </div>
+    	</div>
+    	<div class="col-md-4">
+          <div class="card mb-4 shadow-sm">
+			<svg class="card-center card-img-top" width="100%" height="225" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Top Tracks"><title>Discover</title><rect width="100%" height="100%" fill="#000"/><text x="50%" y="50%" fill="#fff" font-size="2em" pointer-events="none">Future</text></svg>
+            <div class="card-body">
+    			<p class="card-text">Future work.</p>
+    		</div>
+    	  </div>
+    	</div>
+
+            
     </div>
-    <div class="section">
-      <iframe class="iframe-track" src="https://open.spotify.com/embed/track/21jGcNKet2qwijlDFuPiPb" width="100" height=100 frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
-      <iframe class="iframe-track" src="https://open.spotify.com/embed/track/1000nHvUdawXuUHgBod4Wv" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
-      <iframe class="iframe-track" src="https://open.spotify.com/embed/track/0RiRZpuVRbi7oqRdSMwhQY" frameborder="0" allowtransparency="true" allow="encrypted-media"></iframe>
-    </div>
-    <div class="section">
-      <h2>
-      Discover songs based on artists and songs you love!
-      </h2>
-      <p>Inspired by Spotify's Discover Weekly playlists, this website was designed to give Spotify users more versatility with their music. This website allows users to see their top tracks and artists, and can create playlists based off a user's preferences (in the hope of creating a Discover Daily playlist).
-      </p>
-    </div>
-    <div class="section">
-      <form action="/authorize" method="get">
-        <button type="submit">
-          What are my top songs?
-        </button>
-      </form>
-      <iframe src="https://open.spotify.com/follow/1/?uri=spotify:user:lucaoh21&size=detail&theme=light" width="300" height="56" scrolling="no" frameborder="0" style="border:none; overflow:hidden;" allowtransparency="true"></iframe>
-    </div>
-  </div>
+</div>
+
+{% endblock %}
+
+{% block footer %}
+
 {% endblock %}

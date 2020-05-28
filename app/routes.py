@@ -58,7 +58,7 @@ def callback():
 		session['refresh_token'] = refresh_token
 		session['token_expiration'] = time.time() + expiration_time
 
-	return redirect('/tracks')
+	return redirect(session['previous_url'])
 
 
 @app.route('/tracks',  methods=['GET', 'POST'])
@@ -66,14 +66,17 @@ def tracks():
 	print("**** called tracks")
 
 	if session.get('token') == None or session.get('token_expiration') == None:
+		session['previous_url'] = '/tracks'
 		# authorize()
 		return redirect('/authorize')
 
 	if time.time() > session['token_expiration']:
-		refreshToken(session['refresh_token'])
+		token, expiration_time = refreshToken(session['refresh_token'])
+		session['token'] = token
+		session['token_expiration'] = time.time() + expiration_time
+
 	else:
 		print("Time okay")
-		print(session['token_expiration'])
 
 	global sp
 	if sp == None:
@@ -111,6 +114,11 @@ def create():
 	return render_template('create.html', user=session['user'])
 
 
+@app.route('/autocomplete', methods=['GET'])
+def autocomplete():
+    search = request.args.get('q')
+    print(search)
+    return jsonify(matching_results=search)
 
 ###################
 

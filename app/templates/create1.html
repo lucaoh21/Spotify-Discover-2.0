@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block styles %}
+  <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/main.css') }}">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+<link href="//code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" rel="Stylesheet"></link>
+<script src="//code.jquery.com/jquery-2.2.0.min.js"></script>
+<script src="//code.jquery.com/ui/1.10.2/jquery-ui.js" ></script>
+
+
+{% endblock %}
+
+{% block app_content %}
+	
+
+	<div class="container">
+
+	    <div class="jumbotron">
+	      <div class="container">
+	        <h1 class="jumbo-title">Discover Daily: Create</h1>
+	        <p class="jumbo-info">Create a Spotify playlist based on songs, artists, and genres. <br> Enter up to 5 names and the size of your desired playlist.</p>
+	      </div>
+	    </div>
+
+	    <div>
+        	<input name="autocomplete" type="text" id="autocomplete" class="form-control input-lg"/>
+    	</div>
+
+
+	</div>
+
+	<script type=text/javascript>
+		$(function() {
+		    $("#autocomplete").autocomplete({
+		        source:function(request, response) {
+		            $.getJSON("/autocomplete",{
+		                q: request.term, // in flask, "q" will be the argument to look for using request.args
+		            }, function(data) {
+		                response(data.matching_results); // matching_results from jsonify
+		            });
+		        },
+		        minLength: 2,
+		        select: function(event, ui) {
+		            console.log(ui.item.value); // not in your question, but might help later
+		        }
+    		});
+		})
+
+	</script>
+
+{% endblock %}

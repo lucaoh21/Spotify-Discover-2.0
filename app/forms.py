@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, BooleanField, SubmitField
+from wtforms import StringField, BooleanField, SubmitField, TextField
 from wtforms.validators import DataRequired
 
 class PlaylistForm(FlaskForm):
@@ -9,3 +9,7 @@ class PlaylistForm(FlaskForm):
 	sync = BooleanField('Automatic Updates')
 	playlist_name = StringField('Playlist name', validators=[DataRequired()])
 	submit = SubmitField('Create Playlist')
+
+
+# class SearchForm(FlaskForm):
+# 	autocomp = TextField('autocomp', id='autocomplete')
