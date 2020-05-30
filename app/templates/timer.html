@@ -1,0 +1,127 @@
+{% extends "base.html" %}
+
+{% block title %}Timer{% endblock %}
+
+{% block head %}
+	{{ super() }}
+
+  <script src="{{ url_for('static', filename='js/timer.js') }}"></script>
+
+  <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+
+{% endblock %}
+
+
+{% block content %}
+
+<div class="py-5">
+    <div class="container">
+      <div class="row page-info">
+      	<div class="col-12 col-lg-4">
+      		<h1>Interval Timer</h1>
+      	</div>
+      	<div class="col-12 col-lg-8">
+      		<p>Select one of your playlists and enter your desired interval time and length. The app automatically plays your selected music. When time is up, the app skips to the next track and continues this process for the specified length.</p>
+      	</div>
+      </div>
+      <div class="row">
+        <div class="col-sm-12 col-md-8 col-lg-4 p-3 my-auto mx-auto">
+
+          <form class="text-center border border-light p-5 form-list" id="intervalTimer">
+
+            <div class="form-group">
+            <label for="sliderIT">Interval Time (s): <span id="sliderITValue"></span></label>
+            <input name="interval_time" id="sliderIT" class="border-0" type="range" min="10" max="120" value="60">
+            </div> 
+
+            <div class="form-group">
+            <label for="sliderTL">Total Length (m): <span id="sliderTLValue"></span></label>
+            <input name="interval_length" id="sliderTL" class="border-0" type="range" min="1" max="120" value="60">
+            </div>
+
+
+            <div class="form-group">
+            <label>Playlist</label>
+            <select class="browser-default custom-select mb-4" name="playlist">
+                <option value="" disabled>Choose option</option>
+                {% for i in range(playlist_length) %}
+                  <option value="{{ playlist_names[i][1] }}">{{ playlist_names[i][0] }}</option>
+                {% endfor %}
+            </select>
+            </div>
+
+            <div class="form-group">
+            <label>Device</label>
+            <select class="browser-default custom-select mb-4" name="device">
+                <option value="" disabled>Choose option</option>
+                {% for i in range(device_length) %}
+                  <option value="{{ device_names[i][1] }}">{{ device_names[i][0] }}</option>
+                {% endfor %}
+            </select>
+            </div>
+
+            <div class="form-group">
+            <div class="form-check mb-4">
+                <input type="checkbox" class="form-check-input" name="shuffle" id="Shuffle">
+                <label class="form-check-label" for="Shuffle">Shuffle Music</label>
+            </div>
+            </div>
+
+            <button class="btn btn-info btn-block" id="startBtn" type="button">Start</button>
+
+          </form>
+        </div>
+
+
+        <div class="col-sm-12 col-lg-8 p-3">
+          <div id="clockDiv" class="text-center border border-light text-white shadow clock">
+            <p id="currentName" class="m-4 font-weight-bold">Let's Get Started</p>
+            <div class="d-flex flex-wrap justify-content-center equalize mt-4"> <!-- py-4  -->
+              <div class="countdown-square-big countdown-square m-2">
+                <span id="minCount" class="h1 font-weight-bold">0</span> Min
+              </div>
+              <div class="countdown-square-big countdown-square m-2">
+                <span id="secCount" class="h1 font-weight-bold">0</span> Sec
+              </div>
+
+            </div>
+
+            <div class="d-flex flex-wrap justify-content-center mb-2">
+              <div class="countdown-square-small countdown-square m-2">
+                <span id="totalHourCount" class="h1 font-weight-bold">0</span> Hr
+              </div>
+              <div class="countdown-square-small countdown-square m-2">
+                <span id="totalMinCount" class="h1 font-weight-bold">0</span> Min
+              </div>
+              <div class="countdown-square-small countdown-square m-2">
+                <span id="totalSecCount" class="h1 font-weight-bold">0</span> Sec
+              </div>
+            </div>
+
+            <div class="buttonOuter mb-2">
+              <div class="buttonInner p-1">
+                <button id="restartBtn" type="button" class="btn btn-info btn-block">Reset</button>
+              </div>
+              <div class="buttonInner p-1">
+                <button id="pauseBtn" type="button" class="btn btn-info btn-block">Pause</button>
+              </div>
+              <div class="buttonInner p-1">
+                <button id="resumeBtn" type="button" class="btn btn-info btn-block">Resume</button>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+        </div>
+      </div>
+  </div>
+
+
+{% endblock %}
+
+{% block footer %}
+
+{% endblock %}

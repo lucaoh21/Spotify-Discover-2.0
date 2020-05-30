@@ -1,12 +1,8 @@
-from flask import render_template, flash, redirect, request, session, make_response
+from flask import render_template, flash, redirect, request, session, make_response, jsonify
 from app import app
-from app.functions import createStateKey, getToken, refreshToken, getUserInformation, getTopTracks2, getRecommendedTracks, startPlayback, pausePlayback, previousTrack, skipTrack, getUserDevices, createPlaylist, addTracksPlaylist, getTopTracks, searchSpotify
-from app.forms import PlaylistForm
-import spotipy
-import spotipy.util as util
+from app.functions import createStateKey, getToken, refreshToken, checkTokenStatus, getUserInformation, getAllTopTracks, getTopTracksID, getTopArtists, getRecommendedTracks, startPlayback, startPlaybackContext, pausePlayback, shuffle, getUserPlaylists, getUserDevices, skipTrack, getTrack, createPlaylist, addTracksPlaylist, searchSpotify
 import time
 
-sp = None
 
 @app.route('/')
 @app.route('/index')
@@ -53,10 +49,15 @@ def callback():
 		code = request.args.get('code')
 		session.pop('state_key', None)
 
-		token, refresh_token, expiration_time = getToken(code)
-		session['token'] = token
-		session['refresh_token'] = refresh_token
-		session['token_expiration'] = time.time() + expiration_time
+		payload = getToken(code)
+		if payload != None:
+			session['token'] = payload[0]
+			session['refresh_token'] = payload[1]
+			session['token_expiration'] = time.time() + payload[2]
+
+	current_user = getUserInformation(session)
+	session['user'] = current_user['display_name']
+	session['user_id'] = current_user['id']
 
 	return redirect(session['previous_url'])
 
@@ -70,92 +71,146 @@ def tracks():
 		# authorize()
 		return redirect('/authorize')
 
-	if time.time() > session['token_expiration']:
-		token, expiration_time = refreshToken(session['refresh_token'])
-		session['token'] = token
-		session['token_expiration'] = time.time() + expiration_time
+	checkTokenStatus(session)
 
-	else:
-		print("Time okay")
-
-	global sp
-	if sp == None:
-		sp = spotipy.Spotify(auth=session['token'])
-
-
-	current_user = getUserInformation(sp)
-	session['user'] = current_user['display_name']
-	session['user_location'] = current_user['country']
-
-	track_ids = getTopTracks2(sp)
-	rec_track_ids = getRecommendedTracks(sp)
-
-	searchSpotify(sp)
-	playlist_form = PlaylistForm()
-
-	if playlist_form.validate_on_submit():
-		time_range = ""
-		if playlist_form.short_term.data:
-			time_range = "short_term"
-		elif playlist_form.medium_term.data:
-			time_range = "medium_term"
-		else:
-			time_range = "long_term"
-		playlist_id = createPlaylist(sp, session['user'], playlist_form.playlist_name.data, "Created by Discover Daily")
-		addTracksPlaylist(sp, session['user'], playlist_id, time_range)
-		return redirect('/tracks')
+	track_ids = getAllTopTracks(session)
 		
-	return render_template('tracks.html', user=session['user'], track_ids=track_ids, rec_track_ids=rec_track_ids, form=playlist_form)
+	return render_template('tracks.html', track_ids=track_ids)
 
 
 @app.route('/create',  methods=['GET', 'POST'])
 def create():
+	print("**** called create")
 
-	return render_template('create.html', user=session['user'])
+	if session.get('token') == None or session.get('token_expiration') == None:
+		session['previous_url'] = '/create'
+		# authorize()
+		return redirect('/authorize')
+
+	checkTokenStatus(session)
+
+	return render_template('create.html')
+
+
+@app.route('/timer',  methods=['GET', 'POST'])
+def timer():
+	print("**** called timer")
+
+	if session.get('token') == None or session.get('token_expiration') == None:
+		session['previous_url'] = '/timer'
+		# authorize()
+		return redirect('/authorize')
+
+	checkTokenStatus(session)
+
+	device_names = getUserDevices(session)
+	device_length = len(device_names)
+
+	playlist_names = getUserPlaylists(session)
+	playlist_length = len(playlist_names)
+
+	return render_template('timer.html', playlist_names=playlist_names, playlist_length=playlist_length, device_names=device_names, device_length=device_length)
+
+
+@app.route('/createTopPlaylist',  methods=['POST'])
+def createTopPlaylist():
+	print("**** called create top playlist")
+
+
+	if 'short_term' in request.form:
+		playlist_id = createPlaylist(session, request.form['short_term_name'])
+		addTracksPlaylist(session, playlist_id, 'short_term')
+
+	if 'medium_term' in request.form:
+		playlist_id = createPlaylist(session, request.form['medium_term_name'])
+		addTracksPlaylist(session, playlist_id, 'medium_term')
+
+	if 'long_term' in request.form:
+		playlist_id = createPlaylist(session, request.form['long_term_name'])
+		addTracksPlaylist(session, playlist_id, 'long_term')
+
+	auto_update = False
+	if 'auto_update' in request.form:
+		auto_update = True
+
+	return "success"
+
+
+@app.route('/intervalStart',  methods=['POST'])
+def intervalStart():
+	print("**** called interval start")
+
+	playlist = request.form['playlist']
+	session['device'] = request.form['device']
+
+	is_shuffle = False
+	if 'shuffle' in request.form:
+		is_shuffle = True
+
+	shuffle(session, session['device'], is_shuffle)
+	startPlaybackContext(session, playlist, session['device'])
+
+	current_playing = getTrack(session)
+	return jsonify(current_playing)
 
 
 @app.route('/autocomplete', methods=['GET'])
 def autocomplete():
     search = request.args.get('q')
-    print(search)
-    return jsonify(matching_results=search)
+    results = searchSpotify(session, search)
+
+    print(results)
+    return jsonify(matching_results=results[0])
 
 ###################
-
-@app.route('/playback/start')
-def playbackStart():
-	global sp
-	startPlayback(sp)
-	return "start"
-
-@app.route('/playback/pause')
-def playbackPause():
-	global sp
-	pausePlayback(sp)
-	return "pause"
 
 @app.route('/playback/skip')
 def playbackSkip():
-	global sp
-	skipTrack(sp)
-	return "skip"
+	skipTrack(session)
+	current_playing = getTrack(session)
+	return jsonify(current_playing)
 
-@app.route('/playback/previous')
-def playbackPrevious():
-	global sp
-	previousTrack(sp)
-	return "previous"
+
+@app.route('/playback/pause')
+def playbackPause():
+	pausePlayback(session)
+	return "success"
+
+
+@app.route('/playback/resume')
+def playbackResume():
+	startPlayback(session, session['device'])
+
+	current_playing = getTrack(session)
+	return jsonify(current_playing)
+
+# @app.route('/playback/get')
+# def playbackGet():
+# 	current_playing = getTrack(session)
+# 	return current_playing
+
+
+
+
+
+
+
+
+# @app.route('/playback/previous')
+# def playbackPrevious():
+# 	previousTrack(session)
+# 	return "previous"
 
 ###################
-@app.route('/save/favorite', methods=['POST'])
-def saveFavoritePlaylist():
-	print(request.data)
-	time_range = 'short_term'
-	print("Time range ", time_range)
-	# global sp
-	# playlist_id = createPlaylist(sp, session['user'], "Top 25 Most Played", "Created by Discover Daily")
-	# addTracksPlaylist(sp, session['user'], playlist_id)
+# @app.route('/save/favorite', methods=['POST'])
+# def saveFavoritePlaylist():
+# 	print(request.data)
+# 	time_range = 'short_term'
+# 	print("Time range ", time_range)
+# 	# global sp
+# 	# playlist_id = createPlaylist(sp, session['user'], "Top 25 Most Played", "Created by Discover Daily")
+# 	# addTracksPlaylist(sp, session['user'], playlist_id)
 
-	return "playlist created and filled"
+# 	return "playlist created and filled"
 
 

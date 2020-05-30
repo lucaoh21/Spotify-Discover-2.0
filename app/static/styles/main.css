@@ -24,13 +24,17 @@ div {
     box-sizing: inherit;
 }
 
+i {
+	color: #000;
+}
+
 .top-navbar {
 	overflow: hidden;
 	background-color: white;
 	position: sticky!important;
 	top: 0;
 	width: 100%;
-	z-index: 9999;
+	z-index: 9990;
 	border-bottom-style: solid;
 	border-width: 2px;
 	border-color: black;
@@ -181,6 +185,7 @@ footer p {
 .form-header{
   text-align: center;
   border-bottom: 2px solid white;
+  color: #fff!important;
 }
 
 .form-box{
@@ -211,24 +216,22 @@ footer p {
   margin: 5px;
 }
 
+#saveModal {
+	z-index: 9991;
+}
 
 .modal-content {
   display: flex;
   max-width: 720px;
   width: 100%;
-  border-radius: 10px;
+  border-radius: 2.0rem!important;
   overflow: hidden;
   position: absolute;
-}
-
-.modal-title {
-
+  margin-top: 100px;
 }
 
 .modal-left {
-  padding: 30px 30px 20px;
   background: #fff;
-  flex: 1.5;
 }
 
 .modal-right {
@@ -239,11 +242,82 @@ footer p {
 .modal-title {
   font-size: 26px;
   margin: 0;
-  font-weight: 400;
+  font-weight: 700;
+  border-bottom: 2px solid black;
 }
 
 .modal-info {
   margin: 6px 0 30px 0;
 }
 
+
+
 /*****************************************************/
+
+.clock {
+  padding: 0px;
+  list-style: none;
+  margin: 0px;
+  position: relative;
+  border: 3px solid white;
+  border-radius: 15px;
+  background-image: url("album_placeholder.JPG");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.countdown-square {
+	background: rgba(10, 10, 10, 0.95);
+    box-shadow: 0 3px 9px rgba(0, 0, 0, 0.1);
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.countdown-square span{
+	display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+}
+
+.countdown-square-big {
+    width: 200px;
+    height: 150px;
+}
+
+.countdown-square-small {
+    width: 100px;
+    height: 75px;
+    margin-top: 20px;
+}
+
+.countdown-square-big span{
+	font-size: 6rem;
+}
+
+.countdown-square-small {
+	font-size: 1rem;
+}
+
+.equalize {
+	margin-bottom: 125px;
+}
+
+#currentName {
+	font-size: 2rem;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	background-color: rgba(10, 10, 10, 0.5);
+}
+
+.buttonOuter {
+	width:100%;
+    text-align: center;
+}
+
+.buttonInner {
+	display: inline-block;
+	width: 100px;
+}
+

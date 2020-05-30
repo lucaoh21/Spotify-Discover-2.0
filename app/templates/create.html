@@ -1,13 +1,39 @@
 {% extends "base.html" %}
 
-{% block title %}Home{% endblock %}
+{% block title %}Create{% endblock %}
 
 {% block head %}
 	{{ super() }}
+    <link href="//code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" rel="Stylesheet"></link>
+
+
+    <script src="{{ url_for('static', filename='js/create.js') }}"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+
 {% endblock %}
 
 
 {% block content %}
+
+<div class="py-5">
+    <div class="container">
+      <div class="row page-info">
+      	<div class="col-12 col-lg-4">
+      		<h1>Create Playlist</h1>
+      	</div>
+      	<div class="col-12 col-lg-8">
+      		<p>Enter up to 5 song names or artists and we will produce a playlist of similar music for you.</p>
+      	</div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <input name="autocomplete" type="text" id="autocomplete" class="form-control input-lg"/>
+        </div>
+
+      </div>
+  </div>
+</div>
+
 
 {% endblock %}
 
