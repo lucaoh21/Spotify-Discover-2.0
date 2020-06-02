@@ -12,9 +12,9 @@ body {
 
 }
 
-ul {
+/*ul {
 	flex-direction: row!important;
-}
+}*/
 
 div {
 	display: block;
@@ -28,13 +28,58 @@ i {
 	color: #000;
 }
 
-.top-navbar {
+@media (min-width: 768px) {
+  .navbar-brand.logo{
+    position: absolute;
+    width: 100%;
+    left: 0;
+    text-align: center;
+  }
+}
+
+@media (min-width: 300px) {
+  .navbar-brand.logo{
+    margin-left: 10px;
+  }
+}
+
+.nav-scheme {
+  overflow: hidden;
+  background-color: white;
+  position: sticky!important;
+  top: 0;
+  width: 100%;
+  z-index: 1041;
+  border-bottom-style: solid;
+  border-width: 2px;
+  border-color: black;
+  font-weight: 600;
+}
+
+.nav-scheme p, i {
+  color: black;
+}
+
+.nav-scheme p:hover, i:hover {
+  color: gray;
+}
+
+ul.navbar-nav {
+  z-index: 1043;
+}
+
+li.nav-item {
+  height: 65px;
+  line-height: 45px;
+}
+
+/*.top-navbar {
 	overflow: hidden;
 	background-color: white;
 	position: sticky!important;
 	top: 0;
 	width: 100%;
-	z-index: 9990;
+	z-index: 1041;
 	border-bottom-style: solid;
 	border-width: 2px;
 	border-color: black;
@@ -60,7 +105,7 @@ i {
 .horizontal-1 {
     padding-right: 0.5rem!important;
     padding-left: 0.5rem!important;
-}
+}*/
 
 .icon-fa {
 	font-size: 25px; 
@@ -100,13 +145,29 @@ i {
   margin-bottom: 0;
 }
 
+.site-info {
+  color: #fff;
+  font-family: Montserrat,sans-serif;
+  padding-bottom: 30px;
+}
+
+.site-info h1 {
+  font-size: 4em;
+  font-weight: 700;
+}
+
+.site-info h3 {
+  font-size: 2em;
+  font-weight: 400;
+}
+
 .page-info {
 	color: #fff;
 	font-family: Montserrat,sans-serif;
 	display: flex;
-  	justify-content: center;
-  	align-items: center;
-  	padding-bottom: 30px;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 30px;
 }
 
 .page-info p {
@@ -217,7 +278,7 @@ footer p {
 }
 
 #saveModal {
-	z-index: 9991;
+	z-index: 1042;
 }
 
 .modal-content {
@@ -321,3 +382,43 @@ footer p {
 	width: 100px;
 }
 
+.slider-range {
+	width: calc(100% - (75px))!important;
+  	height: 10px!important;
+}
+
+.slider-value {
+  color: #fff;
+  text-align: center;
+  border-radius: 3px;
+  background: #2c3e50;
+  padding: 2px 10px;
+  margin-left: 8px;
+  width: 55px!important;
+  float: right;
+}
+
+.selected-search {
+	line-height: 38px;
+	font-size: 0.75rem!important;
+	width: calc(100% - (75px))!important;
+	overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.list-group-item {
+	padding: .1rem 1.25rem;
+}
+
+.center-parent {
+	text-align: center;
+}
+
+.center-child {
+	margin: auto;
+}
+
+.hyperlink-black {
+  color: #000;
+}

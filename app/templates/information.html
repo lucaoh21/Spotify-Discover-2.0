@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block title %}TopTracks{% endblock %}
+
+{% block head %}
+	{{ super() }}
+{% endblock %}
+
+
+{% block content %}
+<div class="py-5">
+    <div class="container">
+      <div class="row page-info">
+      	<div class="col-12 col-lg-4">
+      		<h1>Privacy</h1>
+      	</div>
+      	<div class="col-12 col-lg-8">
+      		<p>In order to access features within the Spotify SDK, this application needs your permission to enable user scopes (such as 'playlist-modify-public' which allows us to create playlists and add tracks on your behalf). We do not store or distribute any of your information. Permission can be revoked through <a href="https://www.spotify.com/us/account/apps/" class="hyperlink-black">this page</a>.</p>
+      	</div>
+      </div>
+
+
+      <div class="row page-info">
+      	<div class="col-12 col-lg-4">
+      		<h1>TopTracks</h1>
+      	</div>
+      	<div class="col-12 col-lg-8">
+      		<p>Outside of Spotify Wrapped, which occurs at the end of every year, there is no way to view your most listened to tracks. TopTracks provides this feature by allowing you to create a playlist of your top tracks over the last month, 6 months, or all-time. Further, you can select to have these playlists automatically updated, so that they will always feature your favorite music. You can stop automatic updates by deleting the playlist in Spotify.</p>
+      	</div>
+      </div>
+
+      <div class="row page-info">
+      	<div class="col-12 col-lg-4">
+      		<h1>Create</h1>
+      	</div>
+      	<div class="col-12 col-lg-8">
+      		<p>This site provides you with several features to find new music and create playlist in an easy fashion. First, enter up to 5 song names or artists that you want the playlist to reflect. Second, set the tuneable attributes that you want to highlight in your playlist. This includes attributes such as energy, which measures the intensity of music, and valence, which describes the mood of the track. Non-selected attributes will have no effect on the generated playlist.</p>
+      	</div>
+      </div>
+
+      <div class="row page-info">
+      	<div class="col-12 col-lg-4">
+      		<h1>Timer</h1>
+      	</div>
+      	<div class="col-12 col-lg-8">
+      		<p>Interval timers are useful for a variety of activities, including working out. This timer works by cycling through tracks for the specified amount of time. First, select one of your playlists. Second, enter your desired interval time and the total time. Playback automatically starts with the click of a button and when an interval is complete, the application skips to the next track and continues this process for the specified length. A useful countdown timer is also provided.</p>
+      	</div>
+      </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block footer %}
+
+{% endblock %}

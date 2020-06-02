@@ -5,10 +5,11 @@
 {% block head %}
 	{{ super() }}
     <link href="//code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" rel="Stylesheet"></link>
-
-
+    
     <script src="{{ url_for('static', filename='js/create.js') }}"></script>
+    <script>var bootstrapTooltip = jQuery.fn.tooltip;</script> <!-- Naming conflict for tooltip with Bootstrap and JQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script>jQuery.fn.tooltip = bootstrapTooltip;</script> <!-- Naming conflict for tooltip with Bootstrap and JQuery -->
 
 {% endblock %}
 
@@ -22,15 +23,119 @@
       		<h1>Create Playlist</h1>
       	</div>
       	<div class="col-12 col-lg-8">
-      		<p>Enter up to 5 song names or artists and we will produce a playlist of similar music for you.</p>
+      		<p>Enter up to 5 song names or artists and we will produce a playlist of similar music for you. You can also set tuneable attributes such as energy and popularity to target the type of tracks you want selected.</p>
       	</div>
       </div>
       <div class="row">
         <div class="col-12">
           <input name="autocomplete" type="text" id="autocomplete" class="form-control input-lg"/>
         </div>
+      </div>
+      <div class="row center-parent">
+        <div class="col-sm-12 col-md-8 center-child">
+          <div class="list-group py-4" id="selectedItems">
+          </div>
+        </div>
+      </div>
+      <div class="row center-parent">
+        <div class="col-sm-8 center-child">
+          <button type="button" class="btn btn-default form-button" data-toggle="modal" data-target="#saveModal">
+            <i class="fas fa-clipboard-check"></i>
+            <p>Create Playlist</p>
+          </button>
+        </div>
 
       </div>
+
+
+      <div class="modal fade" id="saveModal" tabindex="-1" role="dialog" aria-labelledby="save_modal" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-left m-2">
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true"><i class="far fa-times-circle"></i></span>
+              </button>
+            <form class="p-4" id="playlistForm">
+              <h1 class="modal-title text-center">Create Your New Playlist!</h1>
+              <p class="modal-info">DiscoverDaily will create a Spotify playlist based on your entered tracks and artists. If a parameter is selected below, you can specify a target value for that tuneable attribute. Non-selected parameters will have no impact on the generated playlist.</p>
+              <div class="form-group">
+                <div class="row mb-4">
+                    <div class="col-12">
+                      <div class="form-text">
+                      <label for="playlistName">Playlist Name</label>
+                      <input type="text" class="form-control" name="playlist_name" id="playlistName" aria-describedby="PlaylistName" value="DiscoverDaily">
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <div class="row ml-2 mb-4">
+                  <div class="col-sm-4 my-auto">
+                    <input type="checkbox" class="form-check-input" name="acoustic_level" id="acousticLevel">
+                    <label class="form-check-label" for="acousticLevel" data-toggle="tooltip" data-placement="top" title="A confidence measure from 0.0 to 1.0 of whether the track is acoustic. 1.0 represents high confidence the track is acoustic.">Acousticness</label>
+                  </div>
+                  <div class="col-sm-8 slider">
+                    <input name="slider_acoustic" id="sliderAcousticRange" class="slider-range custom-range border-0" type="range" min="0.0" max="1.0" value="0.5" step="0.01">
+                    <span class="slider-value" id="sliderAcousticValue">0</span>
+                  </div>
+                </div>
+
+                <div class="row ml-2 mb-4">
+                  <div class="col-sm-4 my-auto">
+                    <input type="checkbox" class="form-check-input" name="danceability_level" id="danceabilityLevel">
+                    <label class="form-check-label" for="danceabilityLevel" data-toggle="tooltip" data-placement="top" title="Danceability describes how suitable a track is for dancing based on a combination of musical elements. A value of 0.0 is least danceable and 1.0 is most danceable.">Danceability</label>
+                  </div>
+                  <div class="col-sm-8">
+                    <input name="slider_danceability" id="sliderDanceabilityRange" class="slider-range custom-range border-0" type="range" min="0.0" max="1.0" value="0.5" step="0.01">
+                    <span class="slider-value" id="sliderDanceabilityValue">0</span>
+                  </div>
+                </div>
+
+                <div class="row ml-2 mb-4">
+                  <div class="col-sm-4 my-auto">
+                    <input type="checkbox" class="form-check-input" name="energy_level" id="energyLevel">
+                    <label class="form-check-label" for="energyLevel" data-toggle="tooltip" data-placement="top" title="Energy is a measure from 0.0 to 1.0 and represents a perceptual measure of intensity and activity.">Energy</label>
+                  </div>
+                  <div class="col-sm-8">
+                    <input name="slider_energy" id="sliderEnergyRange" class="slider-range custom-range border-0" type="range" min="0.0" max="1.0" value="0.5" step="0.01">
+                    <span class="slider-value" id="sliderEnergyValue">0</span>
+                  </div>
+                </div>
+
+                <div class="row ml-2 mb-4">
+                  <div class="col-sm-4 my-auto">
+                    <input type="checkbox" class="form-check-input" name="popularity_level" id="popularityLevel">
+                    <label class="form-check-label" for="popularityLevel" data-toggle="tooltip" data-placement="top" title="The popularity of the track. The value will be between 0 and 100, with 100 being the most popular.">Popularity</label>
+                  </div>
+                  <div class="col-sm-8">
+                    <input name="slider_popularity" id="sliderPopularityRange" class="slider-range custom-range border-0" type="range" min="0" max="100" value="50">
+                    <span class="slider-value" id="sliderPopularityValue"></span>
+                  </div>
+                </div>
+
+                <div class="row ml-2 mb-4">
+                  <div class="col-sm-4 my-auto">
+                    <input type="checkbox" class="form-check-input" name="valence_level" id="valenceLevel">
+                    <label class="form-check-label" for="valenceLevel" data-toggle="tooltip" data-placement="top" title="A measure from 0.0 (sad, depressed, angry) to 1.0 (happy, cheerful, euphoric) describing the musical positiveness conveyed by a track.">Valence</label>
+                  </div>
+                  <div class="col-sm-8">
+                    <input name="slider_valence" id="sliderValenceRange" class="slider-range custom-range border-0" type="range" min="0.0" max="1.0" value="0.5" step="0.01">
+                    <span class="slider-value" id="sliderValenceValue">0</span>
+                  </div>
+                </div>
+              </div>
+
+              <button class="btn btn-info btn-block" id="createBtn" type="button" data-dismiss="modal">Create Playlist</button>     
+
+            </form>
+          </div>
+          <div class="modal-right">
+
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 
