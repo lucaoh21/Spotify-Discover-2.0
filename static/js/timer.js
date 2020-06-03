@@ -20,6 +20,7 @@ $(document).ready(function() {
 	var length_counter;
 	var time_interval;
 	var length_interval;
+	var is_active = false;
 
 	function timeInterval () {
 		time_interval = setInterval(function() {
@@ -27,14 +28,25 @@ $(document).ready(function() {
 			if (time_counter <= 0) {
 				$.ajax({
 			        url: '/playback/skip',
-			        type: 'GET',
-			        // success: function(msg) {
-			        //     console.log("success");
-			        // }    
+			        type: 'GET', 
 			        success: function(data) {
 			            $('#currentName').html(data['name']);
 	        			$('.clock').css('background-image', 'url(' + data['img'] + ')');
-			        }              
+			        },
+			        statusCode: {
+		            	403: function () { 	
+		                	alert("You must have a Premium Spotify account to use this feature.")
+		                	clearInterval(time_interval);
+							clearInterval(length_interval);
+		                	return;
+		                },
+		                404: function () { 	
+		                	alert("No devices were found. Head to the Spotify app and start playback to create an active device an use this feature.")
+		                	clearInterval(time_interval);
+							clearInterval(length_interval);
+		                	return;
+		                }
+		            }                 
 			    });
 			    time_counter = time;
 				$('#secCount').css('color', '#ffffff');
@@ -86,7 +98,18 @@ $(document).ready(function() {
 	        success: function(data) {
 	        	$('#currentName').html(data['name']);
 	        	$('.clock').css('background-image', 'url(' + data['img'] + ')');
-	        }           
+	        	return true;
+	        },
+	        statusCode: {
+            	403: function () { 	
+                	alert("You must have a Premium Spotify account to use this feature.")
+                	return false;
+                },
+                404: function () { 	
+                	alert("No devices were found. Head to the Spotify app and start playback to create an active device an use this feature.")
+                	return false;
+                }
+            }           
 	    });
 	};
 
@@ -95,7 +118,17 @@ $(document).ready(function() {
 	        url: '/playback/pause',
 	        type: 'GET',            
   			success: function(msg) {
-	        }      
+	        },
+	        statusCode: {
+            	403: function () { 	
+                	alert("You must have a Premium Spotify account to use this feature.")
+                	return false;
+                },
+                404: function () { 	
+                	alert("No devices were found. Head to the Spotify app and start playback to create an active device an use this feature.")
+                	return false;
+                }
+            }            
 	    });
 	};
 
@@ -106,7 +139,17 @@ $(document).ready(function() {
   			success: function(data) {
 	        	$('#currentName').html(data['name']);
 	        	$('.clock').css('background-image', 'url(' + data['img'] + ')');
-	        } 
+	        },
+	        statusCode: {
+            	403: function () { 	
+                	alert("You must have a Premium Spotify account to use this feature.")
+                	return false;
+                },
+                404: function () { 	
+                	alert("No devices were found. Head to the Spotify app and start playback to create an active device an use this feature.")
+                	return false;
+                }
+            }    
 	    });
 	};
 
@@ -123,9 +166,11 @@ $(document).ready(function() {
 		length = document.getElementById("sliderTLValue").innerHTML * 60; //html is in minutes
 		length_counter = length;
 
-		startPlayback();
-		timeInterval();
-		lengthInterval();
+		if (startPlayback()) {
+			is_active = true;
+			timeInterval();
+			lengthInterval();
+		}
 	});
 
 	$('#restartBtn').click(function() {
@@ -133,17 +178,20 @@ $(document).ready(function() {
 			clearInterval(time_interval);
 			clearInterval(length_interval);
 
-			startPlayback();
-			time_counter = time;
-			length_counter = length;
+			if (startPlayback()) {
+				is_active = true;
+				time_counter = time;
+				length_counter = length;
 
-			timeInterval();
-			lengthInterval();
+				timeInterval();
+				lengthInterval();
+			}
 		}
 	});
 
 	$('#pauseBtn').click(function() {
-		if (typeof time_interval !== 'undefined') {
+		if (typeof time_interval !== 'undefined' && is_active == true) {
+			is_active = false;
 			clearInterval(time_interval);
 			clearInterval(length_interval);
 			pausePlayback();
@@ -151,10 +199,12 @@ $(document).ready(function() {
 	});
 
 	$('#resumeBtn').click(function() {
-		if (typeof time_interval !== 'undefined') {
-			resumePlayback();
-			timeInterval();
-			lengthInterval();
+		if (typeof time_interval !== 'undefined' && is_active == false) {
+			is_active = true;
+			if (resumePlayback()) {
+				timeInterval();
+				lengthInterval();
+			}
 		}
 	});
 

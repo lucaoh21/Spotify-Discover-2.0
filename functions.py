@@ -1,5 +1,5 @@
 from flask import render_template, redirect, request
-from app import app
+from main import app
 import config
 import base64
 import os
@@ -7,6 +7,7 @@ import random as rand
 import string as string
 import requests
 import time
+import logging
 
 # AUTHENTICATION
 
@@ -16,7 +17,6 @@ def createStateKey(size):
 
 
 def getToken(code):
-	print("**** called get token")
 	token_url = 'https://accounts.spotify.com/api/token'
 	authorization = app.config['AUTHORIZATION']
 	redirect_uri = app.config['REDIRECT_URI']
@@ -28,12 +28,11 @@ def getToken(code):
 	if post_response.status_code == 200:
 		return post_response.json()['access_token'], post_response.json()['refresh_token'], post_response.json()['expires_in']
 	else:
-		print('ERROR:', post_response)
+		logging.error('getToken:' + post_response)
 		return None
 
 
 def refreshToken(refresh_token):
-	print("**** called refresh token")
 	token_url = 'https://accounts.spotify.com/api/token'
 	authorization = app.config['AUTHORIZATION']
 
@@ -44,20 +43,19 @@ def refreshToken(refresh_token):
 	if post_response.status_code == 200:
 		return post_response.json()['access_token'], post_response.json()['expires_in']
 	else:
-		print('ERROR:', post_response)
+		logging.error('refreshToken:' + post_response)
 		return None
 
 
 def checkTokenStatus(session):
 	if time.time() > session['token_expiration']:
-		print("getting new token with refresh")
 		payload = refreshToken(session['refresh_token'])
 
 		if payload != None:
 			session['token'] = payload[0]
 			session['token_expiration'] = time.time() + payload[1]
 		else:
-			print("******Problem 45********")
+			logging.error('checkTokenStatus')
 			return None
 
 	return "Success"
@@ -74,7 +72,7 @@ def makeGetRequest(session, url, params={}):
 	elif response.status_code == 401 and checkTokenStatus(session) != None:
 		return makeGetRequest(session, url, params)
 	else:
-		print('ERROR:', response)
+		logging.error('makeGetRequest:' + response)
 		return None
 
 
@@ -83,11 +81,15 @@ def makePutRequest(session, url, params={}, data={}):
 	response = requests.put(url, headers=headers, params=params, data=data)
 
 	if response.status_code == 204:
-		return response
+		return response.status_code
 	elif response.status_code == 401 and checkTokenStatus(session) != None:
 		return makePutRequest(session, url, data)
+	elif response.status_code == 403:
+		return response.status_code
+	elif response.status_code == 404:
+		return response.status_code
 	else:
-		print('ERROR:', response)
+		logging.error('makePutRequest:' + response)
 		return None
 
 def makePostRequest(session, url, data):
@@ -101,8 +103,12 @@ def makePostRequest(session, url, data):
 		return response.json()
 	elif response.status_code == 401 and checkTokenStatus(session) != None:
 		return makePostRequest(session, url, data)
+	elif response.status_code == 403:
+		return response.status_code
+	elif response.status_code == 404:
+		return response.status_code
 	else:
-		print('ERROR:', response)
+		logging.error('makePostRequest:' + response)
 		return None
 
 def makeDeleteRequest(session, url, data):
@@ -114,7 +120,7 @@ def makeDeleteRequest(session, url, data):
 	elif response.status_code == 401 and checkTokenStatus(session) != None:
 		return makePostRequest(session, url, data)
 	else:
-		print('ERROR:', response)
+		logging.error('makeDeleteRequest:' + response)
 		return None
 
 # PERSONAL USER INFORMATION
@@ -261,31 +267,35 @@ def getUserDevices(session):
 def startPlayback(session, device):
 	url = 'https://api.spotify.com/v1/me/player/play'
 	params = {'device_id': device}
-	makePutRequest(session, url, params)
+	payload = makePutRequest(session, url, params)
+	return payload
 
 
 def startPlaybackContext(session, playlist, device):
 	url = 'https://api.spotify.com/v1/me/player/play'
 	params = {'device_id': device}
 	data = "{\"context_uri\":\"" + playlist + "\",\"offset\":{\"position\":0},\"position_ms\":0}"
-	makePutRequest(session, url, params, data)
-
+	payload = makePutRequest(session, url, params, data)
+	return payload
 
 def pausePlayback(session):
 	url = 'https://api.spotify.com/v1/me/player/pause'
-	makePutRequest(session, url)
+	payload = makePutRequest(session, url)
+	return payload
 
 
 def shuffle(session, device, is_shuffle=True):
 	url = 'https://api.spotify.com/v1/me/player/shuffle'
 	params = {'state': is_shuffle, 'device_id': device}
-	makePutRequest(session, url, params)
+	payload = makePutRequest(session, url, params)
+	return payload
 
 
 def skipTrack(session):
 	url = 'https://api.spotify.com/v1/me/player/next'
 	data = {}
-	makePostRequest(session, url, data)
+	payload = makePostRequest(session, url, data)
+	return payload
 
 
 def getTrack(session):

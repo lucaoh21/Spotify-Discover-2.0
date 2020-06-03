@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block head %}
+	{{ super() }}
+{% endblock %}
+
+
+{% block content %}
+
+<main role="main">
+
+
+<section class="jumbotron text-center">
+    <div class="container site-info">
+      <h1>Explore music in a new way</h1>
+      <br>
+      <h3>Find your top Spotify tracks and create custom playlists with just a song or artist!</h3>
+    </div>
+</section>
+
+<div class="py-5 bg-light">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4">
+        <div class="card mb-4 shadow-sm">
+        	<a class="" href="/tracks">
+        		<svg class="card-center card-img-top" width="100%" height="225" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Top Tracks">
+        		  	<defs>
+        				<linearGradient id="gradient1" gradientTransform="rotate(80)">
+        				<stop offset="23%" style="stop-color:rgb(84,118,255);stop-opacity:1" />
+        				<stop offset="45%" style="stop-color:rgb(119,44,115);stop-opacity:1" />
+        				<stop offset="95%"  style="stop-color:rgb(45,45,45);stop-opacity:1" />
+        				</linearGradient>
+        		  	</defs>
+        			<title>Discover</title>
+        			<rect width="100%" height="100%" fill="#000"/>
+        			<text x="50%" y="50%" fill="#fff" font-size="2em" pointer-events="none">Top Tracks</text>
+        		</svg>
+        	</a>
+        <div class="card-body">
+          <p class="card-text">Discover your most listened to tracks and create a TopTracks playlist that automatically updates.</p>
+  		  </div>
+  	  </div>
+  	</div>
+
+  	<div class="col-md-4">
+        <div class="card mb-4 shadow-sm">
+        	<a class="" href="/create">
+		        <svg class="card-center card-img-top" width="100%" height="225" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Top Tracks"><title>Discover</title><rect width="100%" height="100%" fill="#000"/><text x="50%" y="50%" fill="#fff" font-size="2em" pointer-events="none">Find Tracks</text></svg>
+		      </a>
+          <div class="card-body">
+  			<p class="card-text">Enter several track names or artists and select tuneable attributes to create a playlist of similar music.</p>
+  		</div>
+  	  </div>
+  	</div>
+  	<div class="col-md-4">
+        <div class="card mb-4 shadow-sm">
+          <a class="" href="/timer">
+		        <svg class="card-center card-img-top" width="100%" height="225" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Top Tracks"><title>Discover</title><rect width="100%" height="100%" fill="#000"/><text x="50%" y="50%" fill="#fff" font-size="2em" pointer-events="none">Timer</text></svg>
+          </a>
+          <div class="card-body">
+  			<p class="card-text">An interval timer that plays tracks for a specified amount of timer and then skips to the next track.</p>
+  		</div>
+  	  </div>
+  	</div>
+
+          
+  </div>
+</div>
+</div>
+
+{% endblock %}
+
+{% block footer %}
+
+{% endblock %}

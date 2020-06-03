@@ -35,6 +35,10 @@ i {
     left: 0;
     text-align: center;
   }
+
+  .navbar {
+  	display: block!important;
+  }
 }
 
 @media (min-width: 300px) {
@@ -346,14 +350,25 @@ footer p {
     height: 150px;
 }
 
+.countdown-square-big span{
+  font-size: 6rem;
+}
+
+@media (max-width: 466px) {
+.countdown-square-big {
+    width: 120px;
+    height: 90px;
+	}
+
+.countdown-square-big span {
+    font-size: 3.0rem!important;
+	}
+}
+
 .countdown-square-small {
     width: 100px;
     height: 75px;
     margin-top: 20px;
-}
-
-.countdown-square-big span{
-	font-size: 6rem;
 }
 
 .countdown-square-small {

@@ -1,7 +1,7 @@
 from flask import render_template, flash, redirect, request, session, make_response, jsonify, abort
-from app import app
-from app.functions import createStateKey, getToken, refreshToken, checkTokenStatus, getUserInformation, getAllTopTracks, getTopTracksID, getTopTracksURI, getTopArtists, getRecommendedTracks, startPlayback, startPlaybackContext, pausePlayback, shuffle, getUserPlaylists, getUserDevices, skipTrack, getTrack, createPlaylist, addTracksPlaylist, searchSpotify
-from app.models import addUser
+from main import app
+from functions import createStateKey, getToken, refreshToken, checkTokenStatus, getUserInformation, getAllTopTracks, getTopTracksID, getTopTracksURI, getTopArtists, getRecommendedTracks, startPlayback, startPlaybackContext, pausePlayback, shuffle, getUserPlaylists, getUserDevices, skipTrack, getTrack, createPlaylist, addTracksPlaylist, searchSpotify
+from models import addUser
 
 import time
 
@@ -50,6 +50,7 @@ def callback():
 
 	current_user = getUserInformation(session)
 	session['user_id'] = current_user['id']
+	logging.info('new user:' + session['user_id'])
 
 	return redirect(session['previous_url'])
 
@@ -94,6 +95,7 @@ def create():
 
 @app.route('/timer',  methods=['GET'])
 def timer():
+
 	if session.get('token') == None or session.get('token_expiration') == None:
 		session['previous_url'] = '/timer'
 		# authorize()
@@ -202,7 +204,13 @@ def intervalStart():
 	if 'shuffle' in request.form:
 		is_shuffle = True
 
-	shuffle(session, session['device'], is_shuffle)
+	response = shuffle(session, session['device'], is_shuffle)
+	if response == 403:
+		abort(403)
+	if response == 404:
+		abort(404)
+
+
 	startPlaybackContext(session, playlist, session['device'])
 
 	current_playing = getTrack(session)
@@ -219,20 +227,36 @@ def autocomplete():
 
 @app.route('/playback/skip')
 def playbackSkip():
-	skipTrack(session)
+	response = skipTrack(session)
+
+	if response == 403:
+		abort(403)
+	if response == 404:
+		abort(404)
+
 	current_playing = getTrack(session)
 	return jsonify(current_playing)
 
 
 @app.route('/playback/pause')
 def playbackPause():
-	pausePlayback(session)
+	response = pausePlayback(session)
+
+	if response == 403:
+		abort(403)
+	if response == 404:
+		abort(404)
 	return "success"
 
 
 @app.route('/playback/resume')
 def playbackResume():
-	startPlayback(session, session['device'])
+	response = startPlayback(session, session['device'])
+
+	if response == 403:
+		abort(403)
+	if response == 404:
+		abort(404)
 
 	current_playing = getTrack(session)
 	return jsonify(current_playing)
