@@ -1,3 +1,15 @@
+"""
+DiscoverDaily Web Application: Main File
+Author: Luca Ostertag-Hill
+
+Creates an instance of the application and configures it appropriately. 
+Establishes a connection to the MySQL server on Google Cloud and makes sure
+the database is correctly created. Also links Python logger to Google Cloud 
+logging, so that any logging done through Python's logging module is also
+logged in Google Cloud.
+"""
+
+
 from flask import Flask
 from config import Config
 from flask_bootstrap import Bootstrap
@@ -8,7 +20,7 @@ import sqlalchemy
 app = Flask(__name__)
 app.config.from_object(Config)
 
-# connext to google cloud mysql
+# connect to google cloud mysql
 engine = sqlalchemy.create_engine(
         sqlalchemy.engine.url.URL(
         drivername='mysql+pymysql',
@@ -30,17 +42,14 @@ Base = declarative_base()
 from models import User
 Base.metadata.create_all(engine)
 
-
-bootstrap = Bootstrap(app)
-
 # schedule updates for the TopTracks playlists
 from models import updatePlaylists
-
 scheduler = BackgroundScheduler()
-scheduler.add_job(updatePlaylists, trigger='interval', days=3)
+scheduler.add_job(updatePlaylists, trigger='interval', days=1)
 scheduler.start()
 
 import routes
+bootstrap = Bootstrap(app)
 
 # connect google cloud logging with python
 import google.cloud.logging

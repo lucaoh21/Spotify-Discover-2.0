@@ -1,28 +1,35 @@
 $(document).ready(function() {
+    
+    // Initialize all tooltips on page
     $(function () {
       $('[data-toggle="tooltip"]').tooltip()
     })
 
+    // AJAX call to create the playlist
     function createPlaylist() {
         $.ajax({
             url: '/create/playlist',
             type: 'POST',
             data: payload,          
             success: function(data) {
+                // Redirect user to Spotify 
                 window.location.href= data;
             }           
         });
     };
 
+    // Activated when user attempts to create a new playlist
     $('#createBtn').click(function() {
         payload = $('#playlistForm').serialize();
 
+        // Gather all entered track and artist IDs
         var counter = 0;
         $('.selected-search').each(function() {
             payload += '&' + counter.toString() + '=' + $(this).attr('data-id');
             counter += 1;
         });
 
+        // Make sure at least one track or artist was entered
         if (counter == 0) {
             alert('A minimum of one track or artist must be entered to create the playlist.');
         } else {
@@ -31,6 +38,7 @@ $(document).ready(function() {
 
     });
 
+    // Get autocomplete data from endpoint
     $(function() {
         $("#autocomplete").autocomplete({
             source:function(request, response) {
@@ -51,6 +59,7 @@ $(document).ready(function() {
         });
     })
 
+    // Show/hide sliders when attributes in form are selected/unselected
     $('input.form-check-input').change(function(){
         if ($(this).is(':checked')) {
             $(this).parent().next().find('.slider-range').prop('disabled', false);
@@ -60,7 +69,7 @@ $(document).ready(function() {
         }
     }).change();
 
-
+    // Show value of slider next to slider bar
     const $acousticVal = $('#sliderAcousticValue');
     const $acousticRange = $('#sliderAcousticRange');
     $acousticVal.html($acousticRange.val());
@@ -68,6 +77,7 @@ $(document).ready(function() {
         $acousticVal.html($acousticRange.val());
     });
 
+    // Show value of slider next to slider bar
     const $danceabilityVal = $('#sliderDanceabilityValue');
     const $danceabilityRange = $('#sliderDanceabilityRange');
     $danceabilityVal.html($danceabilityRange.val());
@@ -75,6 +85,7 @@ $(document).ready(function() {
         $danceabilityVal.html($danceabilityRange.val());
     });
 
+    // Show value of slider next to slider bar
     const $energyVal = $('#sliderEnergyValue');
     const $energyRange = $('#sliderEnergyRange');
     $energyVal.html($energyRange.val());
@@ -82,6 +93,7 @@ $(document).ready(function() {
         $energyVal.html($energyRange.val());
     });
 
+    // Show value of slider next to slider bar
     const $popularityVal = $('#sliderPopularityValue');
     const $popularityRange = $('#sliderPopularityRange');
     $popularityVal.html($popularityRange.val());
@@ -89,6 +101,7 @@ $(document).ready(function() {
         $popularityVal.html($popularityRange.val());
     });
 
+    // Show value of slider next to slider bar
     const $valenceVal = $('#sliderValenceValue');
     const $valenceRange = $('#sliderValenceRange');
     $valenceVal.html($valenceRange.val());
@@ -96,10 +109,12 @@ $(document).ready(function() {
         $valenceVal.html($valenceRange.val());
     });
 
+    // Show user selected track and artist names
     function createSelected (label, value) {
         $('#selectedItems').append('<a class="list-group-item"><span class="float-left selected-search" data-id="' + value + '">' + label + '</span><span class="float-right"><span class="btn btn-xs btn-default" onclick="removeSelected(this);"><i class="far fa-times-circle"></i></span></span></a>');
     };
 
+    // Remove user selected track and artist names
     removeSelected = function(span) {
         span.parentNode.parentNode.remove();
     };
