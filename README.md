@@ -1,7 +1,9 @@
 # Spotify Discover 2.0 
 **Luca Ostertag-Hill**
 
-Check out the final product [here](https://discoverdaily.wl.r.appspot.com/).
+The final product was recently removed from Google Cloud.
+
+To check out the the coding process and see parts of the final product go [here](https://medium.com/analytics-vidhya/discoverdaily-a-flask-web-application-built-with-the-spotify-api-and-deployed-on-google-cloud-6c046e6e731b).
 
 This Flask based web application uses the Spotify API to provide users with more content and accessibility to the music they like. The application is deployed on the Google Cloud Platform.
 
